@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style>
+@import "css/normalize.css";
+@import "css/main.css";
+
 a {
   color: #42b983;
 }
