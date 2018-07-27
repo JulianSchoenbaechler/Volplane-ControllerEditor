@@ -15,6 +15,9 @@ export default {
       type: String,
     },
   },
+  mounted() {
+    console.log(this.$store);
+  },
 };
 </script>
 

@@ -7,4 +7,9 @@ Vue.config.productionTip = false;
 new Vue({
   store: Store,
   render: h => h(App),
+  mounted() {
+    this.$nextTick(() => {
+      this.$store.commit('setLoadingPanel', false);
+    });
+  },
 }).$mount('#app');
