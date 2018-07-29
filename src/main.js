@@ -9,7 +9,8 @@ new Vue({
   render: h => h(App),
   mounted() {
     this.$nextTick(() => {
-      this.$store.commit('setLoadingPanel', false);
+      const url = new URL(window.location.href);
+      this.$store.dispatch('loadController', url.searchParams.get('controller'));
     });
   },
 }).$mount('#app');
