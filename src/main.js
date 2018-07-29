@@ -10,6 +10,8 @@ new Vue({
   mounted() {
     this.$nextTick(() => {
       const url = new URL(window.location.href);
+
+      // Load controller from URL parameter
       this.$store.dispatch('loadController', url.searchParams.get('controller'));
     });
   },

@@ -14,6 +14,9 @@ export default new Vuex.Store({
     loadingPanel: true,
   },
 
+  // Global getters
+  getters: {},
+
   // Global mutations
   mutations: {
     setLoadingPanel(state, value = true) {
@@ -59,6 +62,15 @@ export default new Vuex.Store({
 
       // Controller state
       state: {},
+
+      // Controller getters
+      getters: {
+
+        // The name of the loaded controller
+        name(state) {
+          return state.name || '';
+        },
+      },
 
       // Controller state mutations
       mutations: {
