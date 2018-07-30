@@ -4,6 +4,20 @@ const path = require('path');
 
 module.exports = {
   configureWebpack: {
+    /* rules: [
+      {
+        test: /\.(svg)(\?.*)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              name: 'fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      },
+    ], */
     resolve: {
       alias: {
         jquery: path.resolve(__dirname, './node_modules/jquery/src/jquery'),
@@ -16,5 +30,17 @@ module.exports = {
         'window.jQuery': 'jquery',
       }),
     ],
+  },
+  chainWebpack: (config) => {
+    config.module
+      .rule('svg')
+      .test(/\.(svg)(\?.*)?$/)
+      .use('file-loader')
+      .loader('url-loader')
+      .tap((options = {}) => {
+        options.limit = 4096;
+        options.name = 'fonts/[name].[hash:8].[ext]';
+        return options;
+      });
   },
 };

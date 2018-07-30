@@ -61,14 +61,22 @@ export default new Vuex.Store({
       namespaced: true,
 
       // Controller state
-      state: {},
+      state: {
+        name: 'noname',
+        views: {},
+        fontList: [],
+        synchronizeTime: true,
+        deviceMotion: false,
+        sensitivity: 5,
+        lastEdit: 0,
+      },
 
       // Controller getters
       getters: {
 
         // The name of the loaded controller
         name(state) {
-          return state.name || '';
+          return state.name || 'noname';
         },
       },
 

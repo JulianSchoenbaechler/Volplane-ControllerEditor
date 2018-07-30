@@ -1,5 +1,194 @@
 /*! HTML5 Boilerplate v6.1.0 | MIT License | https://html5boilerplate.com/ */
 
+/* FONTS */
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Thin.eot');
+  src: url('../assets/fonts/MontserratAlternates-Thin.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Thin.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Thin.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Thin.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Thin.svg#MontserratAlternates-Thin') format('svg');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates ExLight';
+  src: url('../assets/fonts/MontserratAlternates-ExtraLight.eot');
+  src: url('../assets/fonts/MontserratAlternates-ExtraLight.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-ExtraLight.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-ExtraLight.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-ExtraLight.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-ExtraLight.svg#MontserratAlternates-ExtraLight') format('svg');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Regular.eot');
+  src: url('../assets/fonts/MontserratAlternates-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Regular.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Regular.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Regular.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Regular.svg#MontserratAlternates-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-SemiBold.eot');
+  src: url('../assets/fonts/Montserrat-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-SemiBold.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-SemiBold.woff') format('woff'),
+    url('../assets/fonts/Montserrat-SemiBold.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-SemiBold.svg#Montserrat-SemiBold') format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Medium.eot');
+  src: url('../assets/fonts/Montserrat-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Medium.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Medium.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Medium.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Medium.svg#Montserrat-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Light.eot');
+  src: url('../assets/fonts/MontserratAlternates-Light.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Light.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Light.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Light.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Light.svg#MontserratAlternates-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Black.eot');
+  src: url('../assets/fonts/Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Black.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Black.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Black.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Black.svg#Montserrat-Black') format('svg');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Thin.eot');
+  src: url('../assets/fonts/Montserrat-Thin.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Thin.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Thin.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Thin.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Thin.svg#Montserrat-Thin') format('svg');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Regular.eot');
+  src: url('../assets/fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Regular.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Regular.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Regular.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Light.eot');
+  src: url('../assets/fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Light.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Light.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Light.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Light.svg#Montserrat-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-ExtraLight.eot');
+  src: url('../assets/fonts/Montserrat-ExtraLight.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-ExtraLight.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-ExtraLight.woff') format('woff'),
+    url('../assets/fonts/Montserrat-ExtraLight.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-ExtraLight.svg#Montserrat-ExtraLight') format('svg');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-ExtraBold.eot');
+  src: url('../assets/fonts/MontserratAlternates-ExtraBold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-ExtraBold.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-ExtraBold.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-ExtraBold.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-ExtraBold.svg#MontserratAlternates-ExtraBold') format('svg');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Black.eot');
+  src: url('../assets/fonts/MontserratAlternates-Black.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Black.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Black.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Black.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Black.svg#MontserratAlternates-Black') format('svg');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Bold.eot');
+  src: url('../assets/fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-Bold.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-Bold.woff') format('woff'),
+    url('../assets/fonts/Montserrat-Bold.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-Bold.svg#Montserrat-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Bold.eot');
+  src: url('../assets/fonts/MontserratAlternates-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Bold.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Bold.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Bold.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Bold.svg#MontserratAlternates-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-ExtraBold.eot');
+  src: url('../assets/fonts/Montserrat-ExtraBold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Montserrat-ExtraBold.woff2') format('woff2'),
+    url('../assets/fonts/Montserrat-ExtraBold.woff') format('woff'),
+    url('../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype'),
+    url('../assets/fonts/Montserrat-ExtraBold.svg#Montserrat-ExtraBold') format('svg');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('../assets/fonts/MontserratAlternates-Medium.eot');
+  src: url('../assets/fonts/MontserratAlternates-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/MontserratAlternates-Medium.woff2') format('woff2'),
+    url('../assets/fonts/MontserratAlternates-Medium.woff') format('woff'),
+    url('../assets/fonts/MontserratAlternates-Medium.ttf') format('truetype'),
+    url('../assets/fonts/MontserratAlternates-Medium.svg#MontserratAlternates-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -10,10 +199,23 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-html {
-    color: #222;
-    font-size: 1em;
-    line-height: 1.4;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+  color: #F8F8EC;
+  background-color: #313133;
+  background-image: url('../assets/img/main-background.jpg');
+  background-position: left top;
+  background-repeat: repeat;
 }
 
 /*
@@ -27,13 +229,15 @@ html {
  */
 
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  color: #CDAF7B;
+  background: #525156;
+  text-shadow: none;
 }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  color: #CDAF7B;
+  background: #525156;
+  text-shadow: none;
 }
 
 /*
@@ -41,12 +245,12 @@ html {
  */
 
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 /*
@@ -61,7 +265,7 @@ iframe,
 img,
 svg,
 video {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 /*
@@ -69,9 +273,9 @@ video {
  */
 
 fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /*
@@ -79,7 +283,7 @@ fieldset {
  */
 
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 /* ==========================================================================
@@ -87,20 +291,162 @@ textarea {
    ========================================================================== */
 
 .browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
+/*
+ * Controller Editor Style Sheet
+ * Copyright 2018 by Julian Schoenbaechler (http://julian-s.ch/). All rights reserved.
+ * Version      v1.1.0
+ * License      GPL v3
+ */
 
+ /* FULL SCREEN */
+ .full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  text-align: center;
+  background-color: #7A2F34;
+  z-index: 1000;
+}
+.full-screen p {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 0;
+  overflow: visible;
+  white-space: normal;
+}
 
+/* HEADER */
+header {
+  display: block;
+  width: 100%;
+  height: 22px;
+  max-width: 100%;
+  max-height: 22px;
+  text-align: center;
+}
+header h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 22px;
+}
 
+/* APP CONTAINER */
+#app {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 22px);
+  max-width: 100%;
+  max-height: calc(100% - 22px);
+  flex-flow: column nowrap;
+  overflow: hidden;
+}
 
+/* TITLE BAR */
+#ce-title {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  flex: 0 1 auto;
+  text-align: center;
+  background-color: #222126;
+}
+#ce-title h1 {
+  margin: 0;
+  padding: 0.4em 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  border-bottom: 2px solid #7A2F34
+}
+#ce-title samp {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0 20px;
+  padding: 0.4em 0;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 200;
+  line-height: 14px;
+}
+
+/* MAIN GRID LAYOUT */
+main {
+  display: grid;
+  width: 100%;
+  height: auto;
+  flex: 1 1 auto;
+  grid:
+    [editor-start] 'toolbox  props   canvas' auto [editor-end]
+    [footer-start] 'footer   footer  footer' 20px [footer-end]
+    / 48px 40% auto;
+  gap: 0 0;
+}
+
+/* TOOLBOX */
+#ce-toolbox {
+  display: block;
+  grid-area: toolbox;
+  background-color: #141416;
+}
+
+/* EDITOR PANEL / PROPERTY PANEL */
+#ce-props {
+  display: block;
+  grid-area: props;
+  background-color: #1B1B1E;
+  background-image: url('../assets/img/props-background.jpg');
+  background-position: left top;
+  background-repeat: repeat;
+}
+
+/* EDITOR CANVAS */
+#ce-canvas {
+  display: block;
+  grid-area: canvas;
+}
+
+/* EDITOR FOOTER */
+#ce-footer {
+  display: block;
+  grid-area: footer;
+  color: #222125;
+  background-color: #7A2F34;
+}
+
+/* LOADING PANEL */
+#ce-loading {
+  color: #222125;
+}
 
 
 
@@ -122,7 +468,7 @@ textarea {
  */
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 /*
@@ -135,15 +481,15 @@ textarea {
  */
 
 .visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-    white-space: nowrap; /* 1 */
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap; /* 1 */
 }
 
 /*
@@ -154,13 +500,13 @@ textarea {
 
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
-    white-space: inherit;
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit;
 }
 
 /*
@@ -168,7 +514,7 @@ textarea {
  */
 
 .invisible {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /*
@@ -185,12 +531,23 @@ textarea {
 
 .clearfix:before,
 .clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+  content: " "; /* 1 */
+  display: table; /* 2 */
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
+}
+
+/*
+ * Generic floating elements
+ */
+
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
 }
 
 /* ==========================================================================
@@ -200,14 +557,14 @@ textarea {
    ========================================================================== */
 
 @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+  /* Style adjustments for viewports that meet the condition */
 }
 
 @media print,
        (-webkit-min-device-pixel-ratio: 1.25),
        (min-resolution: 1.25dppx),
        (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+  /* Style adjustments for high resolution devices */
 }
 
 /* ==========================================================================
@@ -217,71 +574,71 @@ textarea {
    ========================================================================== */
 
 @media print {
-    *,
-    *:before,
-    *:after {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster */
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster */
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
 
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
 
-    /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
 
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
 
-    pre {
-        white-space: pre-wrap !important;
-    }
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
 
-    /*
-     * Printing Tables:
-     * http://css-discuss.incutio.com/wiki/Printing_Tables
-     */
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
 
-    thead {
-        display: table-header-group;
-    }
+  thead {
+    display: table-header-group;
+  }
 
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
 
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
 
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 }

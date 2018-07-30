@@ -17,9 +17,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-#ce-loading {
-  color: #7a2f34;
-}
-</style>
