@@ -63,7 +63,7 @@ export default new Vuex.Store({
       // Controller state
       state: {
         name: 'noname',
-        views: {},
+        views: [],
         fontList: [],
         synchronizeTime: true,
         deviceMotion: false,
@@ -77,6 +77,11 @@ export default new Vuex.Store({
         // The name of the loaded controller
         name(state) {
           return state.name || 'noname';
+        },
+
+        // All views of the loaded controller
+        views(state) {
+          return state.views || [];
         },
       },
 

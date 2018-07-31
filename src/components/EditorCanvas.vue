@@ -1,7 +1,16 @@
 <template>
-  <section id="ce-canvas"></section>
+  <section id="ce-canvas">
+    <tabs />
+  </section>
 </template>
 
 <script>
-export default {};
+import Tabs from './editor-canvas/Tabs.vue';
+
+export default {
+  name: 'editor-canvas',
+  components: {
+    Tabs,
+  },
+};
 </script>

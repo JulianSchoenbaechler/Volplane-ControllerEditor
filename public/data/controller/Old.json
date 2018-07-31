@@ -1,22 +1,7 @@
 ﻿{
   "name": "Lobby",
-  "lastEdit": 1515329430,
-  "synchronizeTime": false,
-  "deviceMotion": false,
-  "sensitivity": 5,
-  "fontList": [
-    "fonts/Diane de France.eot",
-    "fonts/Diane de France.otf",
-    "fonts/Diane de France.svg",
-    "fonts/Diane de France.ttf",
-    "fonts/Diane de France.woff"
-  ],
-  "views": [
-    {
-      "name": "lobby",
-      "default": true,
-      "color": "rgb(31, 29, 42)",
-      "layout": "portrait",
+  "views": {
+    "lobby": {
       "content": [
         {
           "type": "button",
@@ -99,13 +84,13 @@
           "paddingHorizontal": 2,
           "fontColor": "rgb(248, 248, 236)"
         }
-      ]
-    },
-    {
-      "name": "full",
-      "default": false,
+      ],
+      "gridX": 5,
+      "gridY": 5,
       "color": "rgb(31, 29, 42)",
-      "layout": "portrait",
+      "grid": true
+    },
+    "full": {
       "content": [
         {
           "type": "text",
@@ -141,13 +126,12 @@
           "paddingHorizontal": 2,
           "fontColor": "rgb(248, 248, 236)"
         }
-      ]
+      ],
+      "gridX": 5,
+      "gridY": 5,
+      "color": "rgb(31, 29, 42)"
     },
-    {
-      "name": "waiting",
-      "default": false,
-      "color": "rgb(31, 29, 42)",
-      "layout": "portrait",
+    "waiting": {
       "content": [
         {
           "type": "text",
@@ -166,13 +150,12 @@
           "paddingHorizontal": 2,
           "fontColor": "rgb(248, 248, 236)"
         }
-      ]
+      ],
+      "gridX": 5,
+      "gridY": 5,
+      "color": "rgb(31, 29, 42)"
     },
-    {
-      "name": "game",
-      "default": false,
-      "color": "rgb(31, 29, 42)",
-      "layout": "portrait",
+    "game": {
       "content": [
         {
           "type": "text",
@@ -207,7 +190,21 @@
           "stickSize": 50,
           "thumbSize": 20
         }
-      ]
+      ],
+      "gridX": 5,
+      "gridY": 5,
+      "color": "rgb(31, 29, 42)"
     }
-  ]
+  },
+  "fontList": [
+    "fonts/Diane de France.eot",
+    "fonts/Diane de France.otf",
+    "fonts/Diane de France.svg",
+    "fonts/Diane de France.ttf",
+    "fonts/Diane de France.woff"
+  ],
+  "layout": "portrait",
+  "synchronizeTime": false,
+  "deviceMotion": false,
+  "lastEdit": 1515329430
 }
