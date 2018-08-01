@@ -1,16 +1,19 @@
 <template>
   <div id="ce-canvas-tabs">
     <ul ref="container">
-      <li class="small">
-        <span class="inline-control move-left" />
+      <li v-show="arrow.left" class="small">
+        <span class="inline-control" />
       </li>
-      <li v-for="(view, i) in views" :key="`view-${i}`" :class="{ default: view.default }">
+      <li v-for="(view, i) in views"
+          :key="`view-${i}`"
+          :class="{ default: view.default }">
         {{ view.name }}
         <span v-if="!view.default" class="inline-control make-default" />
         <span class="inline-control delete" />
       </li>
-      <li class="small">
-        <span class="inline-control move-right" />
+      <!-- TODO: add (+) control -> adding new view -->
+      <li v-show="arrow.right" class="small">
+        <span class="inline-control" />
       </li>
     </ul>
   </div>
@@ -23,6 +26,11 @@ export default {
   data() {
     return {
       overflow: false,
+      visibility: [],
+      arrow: {
+        right: false,
+        left: false,
+      },
     };
   },
 
@@ -32,23 +40,50 @@ export default {
     },
   },
 
+  watch: {
+    views(value) {
+      // Re-init
+      this.$nextTick(() => {
+        const listItems = this.$refs.container.children;
+
+        this.visibility = [];
+
+        for (let i = 0; i < value.length; i += 1) {
+          this.visibility.push({
+            value: true,
+            width: listItems[i + 1].offsetWidth,
+          });
+        }
+
+        this.handleOverflow();
+      });
+    },
+  },
+
   methods: {
     handleOverflow() {
       const list = this.$refs.container;
+      const tabWidth = this.visibility.reduce((a, el) => a + el.width, 0);
 
-      if (
-        this.$data.overflow === false &&
-        list.scrollWidth > list.clientWidth
-      ) {
-        console.log('overflow');
-        this.$data.overflow = true;
-      } else if (
-        this.$data.overflow === true &&
-        list.scrollWidth <= list.clientWidth
-      ) {
-        console.log('none overflow');
-        this.$data.overflow = false;
+      // Check if tabs would fit
+      if (tabWidth <= list.clientWidth) {
+        if (this.overflow === true) {
+          // Remove arrows and enable everything
+          this.arrow.right = false;
+          this.arrow.left = false;
+          this.visibility.forEach((el) => {
+            el.value = true;
+          });
+        }
       }
+
+      /* if (this.overflow === false && tabWidth > list.clientWidth) {
+        console.log('overflow');
+        this.overflow = true;
+      } else if (this.overflow === true && tabWidth <= list.clientWidth) {
+        console.log('none overflow');
+        this.overflow = false;
+      } */
     },
   },
 
@@ -56,9 +91,6 @@ export default {
     this.$nextTick(() => {
       // Listen for window resizing event
       window.addEventListener('resize', this.handleOverflow);
-
-      // Init
-      this.handleOverflow();
     });
   },
 

@@ -494,7 +494,8 @@ main {
 #ce-canvas-tabs li.small {
   padding: 0 4px;
 }
-#ce-canvas-tabs li.stretch:not(.small){
+#ce-canvas-tabs li.stretch:not(.small) {
+  /* small list items never grow */
   flex-grow: 1;
 }
 #ce-canvas-tabs li .inline-control {
