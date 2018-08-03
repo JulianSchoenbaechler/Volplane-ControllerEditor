@@ -506,21 +506,24 @@ main {
   height: 12px;
   margin: 10px 0 10px 6px;
   padding: 0;
-  line-height: 32px;
+  color: #F8F8EC;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
 }
 #ce-canvas-tabs li.small .inline-control {
   visibility: visible;
-  margin: 0;
+  margin: 10px 0;
 }
 #ce-canvas-tabs li:hover .inline-control,
 #ce-canvas-tabs li.active .inline-control {
   visibility: visible;
 }
 #ce-canvas-tabs .inline-control.make-default {
-  background-color: olivedrab;
+  /* background-color: olivedrab; */
 }
 #ce-canvas-tabs .inline-control.delete {
-  background-color: red;
+  /* background-color: red; */
 }
 
 /* EDITOR FOOTER */

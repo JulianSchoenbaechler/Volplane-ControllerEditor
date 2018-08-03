@@ -2,7 +2,9 @@
   <div id="ce-canvas-tabs">
     <ul ref="container">
       <li v-show="arrow.left" class="small" @click="shiftTabs(true)">
-        <span class="inline-control" />
+        <span class="inline-control">
+          <font-awesome-icon icon="angle-left" />
+        </span>
       </li>
       <li v-for="(visible, i) in visibility"
           :key="`view-${i}`"
@@ -13,12 +15,18 @@
             stretch: overflow,
           }">
         {{ views[i].name }}
-        <span v-if="!views[i].default" class="inline-control make-default" />
-        <span class="inline-control delete" />
+        <span class="inline-control delete">
+          <font-awesome-icon icon="times" />
+        </span>
+        <span v-if="!views[i].default" class="inline-control make-default">
+          <font-awesome-icon icon="bullseye" />
+        </span>
       </li>
       <!-- TODO: add (+) control -> adding new view -->
       <li v-show="arrow.right" class="small" @click="shiftTabs()">
-        <span class="inline-control" />
+        <span class="inline-control">
+          <font-awesome-icon icon="angle-right" />
+        </span>
       </li>
     </ul>
   </div>
