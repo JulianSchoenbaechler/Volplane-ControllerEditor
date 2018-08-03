@@ -1,18 +1,23 @@
 <template>
   <div id="ce-canvas-tabs">
     <ul ref="container">
-      <li v-show="arrow.left" class="small">
+      <li v-show="arrow.left" class="small" @click="shiftTabs(true)">
         <span class="inline-control" />
       </li>
-      <li v-for="(view, i) in views"
+      <li v-for="(visible, i) in visibility"
           :key="`view-${i}`"
-          :class="{ default: view.default }">
-        {{ view.name }}
-        <span v-if="!view.default" class="inline-control make-default" />
+          v-show="visible.value"
+          :class="{
+            default: views[i].default,
+            /* active: true, */
+            stretch: overflow,
+          }">
+        {{ views[i].name }}
+        <span v-if="!views[i].default" class="inline-control make-default" />
         <span class="inline-control delete" />
       </li>
       <!-- TODO: add (+) control -> adding new view -->
-      <li v-show="arrow.right" class="small">
+      <li v-show="arrow.right" class="small" @click="shiftTabs()">
         <span class="inline-control" />
       </li>
     </ul>
@@ -35,24 +40,30 @@ export default {
   },
 
   computed: {
+    // The controller views
     views() {
       return this.$store.getters['controller/views'];
     },
   },
 
   watch: {
+    // Watch for view changes (adding / removing)
     views(value) {
-      // Re-init
+      this.visibility = [];
+
+      for (let i = 0; i < value.length; i += 1) {
+        this.visibility.push({
+          value: true,
+          width: 0,
+        });
+      }
+
+      // Init list item width the next tick
       this.$nextTick(() => {
         const listItems = this.$refs.container.children;
 
-        this.visibility = [];
-
         for (let i = 0; i < value.length; i += 1) {
-          this.visibility.push({
-            value: true,
-            width: listItems[i + 1].offsetWidth,
-          });
+          this.visibility[i].width = listItems[i + 1].offsetWidth;
         }
 
         this.handleOverflow();
@@ -61,9 +72,25 @@ export default {
   },
 
   methods: {
+    // Checks the tabs for overflow and handles the rearrangement
     handleOverflow() {
       const list = this.$refs.container;
-      const tabWidth = this.visibility.reduce((a, el) => a + el.width, 0);
+      const tabWidth = this.visibility.reduce((a, v) => v.width + a, 0);
+
+      // Inline function for calculating minimum space required for a specified amount of tabs.
+      const minWidth = (numberOfTabs = 1) => {
+        const itemWidths = this.visibility.map(v => v.width);
+        let w = 0;
+
+        // Adding together the width of the greatest tabs
+        for (let i = 0; i < numberOfTabs; i += 1) {
+          const max = Math.max(...itemWidths);
+          w += max;
+          itemWidths.splice(itemWidths.indexOf(max), 1);
+        }
+
+        return w + 41;
+      };
 
       // Check if tabs would fit
       if (tabWidth <= list.clientWidth) {
@@ -71,19 +98,75 @@ export default {
           // Remove arrows and enable everything
           this.arrow.right = false;
           this.arrow.left = false;
-          this.visibility.forEach((el) => {
-            el.value = true;
+          this.visibility.forEach((v) => {
+            v.value = true;
           });
+          this.overflow = false;
         }
-      }
+      } else {
+        let tabCount = this.visibility.filter(v => v.value === true).length;
+        const maxTabs = this.visibility.length;
+        const bottomLimit = minWidth(tabCount);
+        const upperLimit =
+          tabCount < maxTabs ? minWidth(tabCount + 1) : list.clientWidth;
 
-      /* if (this.overflow === false && tabWidth > list.clientWidth) {
-        console.log('overflow');
+        // Add or remove as necessary
+        if (tabCount === maxTabs) {
+          // First time detected overflow -> still same amount of tabs, remove one
+          tabCount -= 1;
+        } else if (list.clientWidth >= upperLimit) {
+          // Add one if space available
+          tabCount += 1;
+        } else if (list.clientWidth < bottomLimit) {
+          // Remove one when space exceeded
+          tabCount -= 1;
+        }
+
+        this.visibility.forEach((v, i) => {
+          v.value = i < tabCount;
+        });
+
+        this.arrow.right = true;
+        this.arrow.left = false;
         this.overflow = true;
-      } else if (this.overflow === true && tabWidth <= list.clientWidth) {
-        console.log('none overflow');
-        this.overflow = false;
-      } */
+      }
+    },
+
+    // Shifting overflowing tabs right or left
+    shiftTabs(inverse = false) {
+      let shifted = false;
+
+      // Inline function for handling enabling/disabling of elements on shift
+      // independent of the shifting direction.
+      // Provide the iteration (tab) index
+      const shift = (i) => {
+        if (!shifted && this.visibility[i].value) {
+          shifted = true;
+          this.visibility[i].value = false;
+        } else if (shifted && !this.visibility[i].value) {
+          shifted = false;
+          this.visibility[i].value = true;
+
+          if (!inverse && i === this.visibility.length - 1) {
+            this.arrow.right = false;
+          } else if (inverse && i === 0) {
+            this.arrow.left = false;
+          }
+        }
+      };
+
+      // According to shift direction, iterate through array forwards or backwards
+      if (!inverse) {
+        for (let i = 0; i < this.visibility.length; i += 1) {
+          shift(i);
+        }
+        this.arrow.left = true;
+      } else {
+        for (let i = this.visibility.length - 1; i >= 0; i -= 1) {
+          shift(i);
+        }
+        this.arrow.right = true;
+      }
     },
   },
 
