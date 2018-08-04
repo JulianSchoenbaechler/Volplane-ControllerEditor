@@ -318,7 +318,6 @@ textarea {
   min-width: 100%;
   min-height: 100%;
   text-align: center;
-  background-color: #7A2F34;
   z-index: 1000;
 }
 .full-screen p {
@@ -451,6 +450,7 @@ main {
 /* LOADING PANEL */
 #ce-loading {
   color: #222125;
+  background-color: #7A2F34;
 }
 
 
