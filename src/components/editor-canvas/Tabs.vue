@@ -1,7 +1,7 @@
 <template>
   <div id="ce-canvas-tabs">
     <ul ref="container">
-      <li v-show="arrow.left" class="small" @click="shiftTabs(true)">
+      <li v-show="arrow.left" class="small" @click="shiftTabs(true, $event)">
         <span class="inline-control">
           <font-awesome-icon icon="angle-left" />
         </span>
@@ -11,19 +11,23 @@
           v-show="visible.value"
           :class="{
             default: views[i].default,
-            /* active: true, */
+            active: visible.active,
             stretch: overflow,
-          }">
+          }"
+          @click="setActive(views[i].name, $event)">
         {{ views[i].name }}
-        <span class="inline-control delete">
+        <span class="inline-control delete" @click="remove(views[i].name, $event)">
           <font-awesome-icon icon="times" />
         </span>
-        <span v-if="!views[i].default" class="inline-control make-default">
-          <font-awesome-icon icon="bullseye" />
+        <span
+            v-if="!views[i].default"
+            class="inline-control make-default"
+            @click="makeDefault(views[i].name, $event)">
+          <font-awesome-icon icon="bullseye" title="Make default" />
         </span>
       </li>
       <!-- TODO: add (+) control -> adding new view -->
-      <li v-show="arrow.right" class="small" @click="shiftTabs()">
+      <li v-show="arrow.right" class="small" @click="shiftTabs(false, $event)">
         <span class="inline-control">
           <font-awesome-icon icon="angle-right" />
         </span>
@@ -57,11 +61,26 @@ export default {
   watch: {
     // Watch for view changes (adding / removing)
     views(value) {
+      const currentNumberOfViews = this.visibility.length;
+      let activeIndex = 0;
+
+      // View added?
+      if (currentNumberOfViews !== 0 && currentNumberOfViews < value.length) {
+        activeIndex = value.length - 1;
+      } else {
+        // Find index of current view
+        this.visibility.forEach((v, i) => {
+          if (v.active === true) activeIndex = i;
+        });
+      }
+
+      // Reassign visibility array
       this.visibility = [];
 
       for (let i = 0; i < value.length; i += 1) {
         this.visibility.push({
           value: true,
+          active: i === activeIndex,
           width: 0,
         });
       }
@@ -141,8 +160,11 @@ export default {
     },
 
     // Shifting overflowing tabs right or left
-    shiftTabs(inverse = false) {
+    // Event handler
+    shiftTabs(inverse = false, event = null) {
       let shifted = false;
+
+      if (event) event.stopPropagation();
 
       // Inline function for handling enabling/disabling of elements on shift
       // independent of the shifting direction.
@@ -176,6 +198,32 @@ export default {
         this.arrow.right = true;
       }
     },
+
+    // Select a tab (view) and set it active
+    // Event handler
+    setActive(name = 'noname', event = null) {
+      if (event) event.stopPropagation();
+
+      this.visibility.forEach((v, i) => {
+        v.active = this.views[i].name === name;
+      });
+
+      this.$store.commit('editor/setActiveView', name);
+    },
+
+    // Remove view button
+    // Event handler
+    remove(name = 'noname', event = null) {
+      if (event) event.stopPropagation();
+      console.log(`Delete view: ${name}`);
+    },
+
+    // Make default view button
+    // Event handler
+    makeDefault(name = 'noname', event = null) {
+      if (event) event.stopPropagation();
+      console.log(`Make default view: ${name}`);
+    },
   },
 
   mounted() {
@@ -191,3 +239,92 @@ export default {
   },
 };
 </script>
+
+<style>
+/*
+ * Editor canvas tabs
+ */
+
+#ce-canvas-tabs {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+#ce-canvas-tabs ul {
+  display: flex;
+  width: 100%;
+  height: 32px;
+  max-width: 100%;
+  max-height: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  flex-flow: row nowrap;
+  background-color: #414044;
+  box-shadow: 0 0 4px 4px #222125;
+}
+#ce-canvas-tabs li {
+  display: inline-block;
+  flex: 0 0 auto;
+  max-width: 80%;
+  max-height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+  line-height: 32px;
+  overflow: hidden;
+  user-select: none;
+  border-right: 1px solid #414044;
+  background-color: #525156;
+  cursor: pointer;
+}
+#ce-canvas-tabs li:last-child {
+  border: none;
+}
+#ce-canvas-tabs li.default {
+  color: #cdaf7b;
+}
+#ce-canvas-tabs li.active {
+  background-color: #222125;
+}
+#ce-canvas-tabs li.active.default {
+  color: #7a2f34;
+}
+#ce-canvas-tabs li.small {
+  padding: 0 4px;
+}
+#ce-canvas-tabs li.stretch:not(.small) {
+  /* small list items never grow */
+  flex-grow: 1;
+}
+#ce-canvas-tabs li .inline-control {
+  display: block;
+  float: right;
+  visibility: hidden;
+  width: 12px;
+  height: 12px;
+  margin: 10px 0 10px 6px;
+  padding: 0;
+  color: #f8f8ec;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
+}
+#ce-canvas-tabs li.small .inline-control {
+  visibility: visible;
+  margin: 10px 0;
+}
+#ce-canvas-tabs li:hover .inline-control,
+#ce-canvas-tabs li.active .inline-control {
+  visibility: visible;
+}
+#ce-canvas-tabs .inline-control.make-default {
+  /* background-color: olivedrab; */
+}
+#ce-canvas-tabs .inline-control.delete {
+  /* background-color: red; */
+}
+</style>

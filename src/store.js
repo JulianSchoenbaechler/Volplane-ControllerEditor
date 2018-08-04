@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import loadData from './dataLoader';
-import sanitizeName from './stringSanitizer';
+import loadData from './utils/dataLoader';
+import sanitizeName from './utils/stringSanitizer';
+
+// Store modules
+import controllerModule from './controllerModule';
+import editorModule from './editorModule';
 
 Vue.use(Vuex);
 
@@ -45,7 +49,14 @@ export default new Vuex.Store({
       try {
         const data = await loadData(`data/controller/${load}.json?t=${Date.now() || 0}`);
 
+        // Set defaults
+
+        // Controller
         context.commit('controller/setControllerData', data);
+
+        // Editor
+        context.commit('editor/setActiveView', context.getters['controller/views'][0].name || 'noname');
+
         context.commit('setLoadingPanel', false);
       } catch (e) {
         console.error(e);
@@ -56,52 +67,10 @@ export default new Vuex.Store({
   // Store modules
   modules: {
 
-    // Controller data module
-    controller: {
-      namespaced: true,
+    // Controller module
+    controller: controllerModule,
 
-      // Controller state
-      state: {
-        name: 'noname',
-        views: [],
-        fontList: [],
-        synchronizeTime: true,
-        deviceMotion: false,
-        sensitivity: 5,
-        lastEdit: 0,
-      },
-
-      // Controller getters
-      getters: {
-
-        // The name of the loaded controller
-        name(state) {
-          return state.name || 'noname';
-        },
-
-        // All views of the loaded controller
-        views(state) {
-          return state.views || [];
-        },
-      },
-
-      // Controller state mutations
-      mutations: {
-
-        // Complete reassign controller data
-        setControllerData(state, data) {
-          Object.assign(state, data);
-        },
-
-        // Basic controller settings
-        setControllerSettings(state, data) {
-          const { synchronizeTime = true, deviceMotion = false, sensitivity = 5 } = data;
-
-          state.synchronizeTime = synchronizeTime;
-          state.deviceMotion = deviceMotion;
-          state.sensitivity = sensitivity;
-        },
-      },
-    },
+    // Editor module
+    editor: editorModule,
   },
 });
