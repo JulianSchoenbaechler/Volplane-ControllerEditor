@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <loading-panel v-show="loadingPanel" />
-   <!-- <popup type="alert" /> -->
+    <popup title="Hello World" />
     <title-bar />
 
     <main>
