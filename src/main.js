@@ -4,10 +4,23 @@ import Store from './store';
 
 // Global components
 import Popup from './components/global/Popup.vue';
+import CheckBox from './components/global/CheckBox.vue';
 
 /* eslint-disable */
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes, faBullseye, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  faSquare
+} from '@fortawesome/free-regular-svg-icons';
+
+import {
+  faTimes,
+  faBullseye,
+  faAngleRight,
+  faAngleLeft,
+  faCheckSquare
+} from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 /* eslint-enable */
 
@@ -17,11 +30,14 @@ library.add(
   faBullseye,
   faAngleRight,
   faAngleLeft,
+  faSquare,
+  faCheckSquare,
 );
 
 // Global components
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('popup', Popup);
+Vue.component('checkbox', CheckBox);
 
 Vue.config.productionTip = false;
 

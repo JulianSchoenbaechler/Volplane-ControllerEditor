@@ -211,7 +211,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
-  color: #F8F8EC;
+  color: #f8f8ec;
   background-color: #313133;
   background-image: url('../assets/img/main-background.jpg');
   background-position: left top;
@@ -229,13 +229,13 @@ html, body {
  */
 
 ::-moz-selection {
-  color: #CDAF7B;
+  color: #cdaf7b;
   background: #525156;
   text-shadow: none;
 }
 
 ::selection {
-  color: #CDAF7B;
+  color: #cdaf7b;
   background: #525156;
   text-shadow: none;
 }
@@ -354,6 +354,105 @@ header h1 {
   line-height: 22px;
 }
 
+/* FORM ELEMENTS */
+input {
+  display: block;
+  width: auto;
+  height: 20px;
+  max-width: auto;
+  max-height: 20px;
+  margin: 4px 10px;
+  padding: 0 4px;
+  font-family: 'Montserrat';
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+  line-height: normal !important;
+  color: #f8f8ec;
+  background-color: #313133;
+  box-sizing: border-box;
+  border: 1px solid #7a2f34;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+input:active, input:hover {
+  background-color: #353438;
+  transition: all 0.2s ease-in-out;
+}
+input[type="color"] {
+  padding: 4px;
+  width: 30px;
+  cursor: pointer;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  min-width: 100px;
+  min-height: auto;
+  line-height: normal !important;
+  cursor: pointer;
+  outline: none;
+}
+input[type="submit"] {
+  background-color: #7a2f34;
+}
+input[type="submit"]:active,
+input[type="submit"]:hover {
+  background-color: #87383c;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+}
+textarea {
+  display: block;
+  margin: 4px 10px;
+  padding: 4px;
+  font-family: 'Montserrat';
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+  color: #f8f8ec;
+  background-color: #313133;
+  border: 1px solid #7a2f34;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+textarea:active, textarea:hover {
+  background-color: #353438;
+  transition: all 0.2s ease-in-out;
+}
+select {
+  display: block;
+  width: auto;
+  height: 20px;
+  max-width: auto;
+  max-height: 20px;
+  margin: 4px 10px;
+  padding: 0 14px 0 0;
+  font-family: 'Montserrat';
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+  color: #f8f8ec;
+  cursor: pointer;
+  background-color: #313133;
+  border: 1px solid #7a2f34;
+  border-radius: 4px;
+  appearance: none;
+  transition: all 0.2s ease-in-out;
+}
+select:active, select:hover {
+    background-color: #353438;
+    transition: all 0.2s ease-in-out;
+}
+
 /* APP CONTAINER */
 #app {
   display: flex;
@@ -382,7 +481,7 @@ header h1 {
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
-  border-bottom: 2px solid #7A2F34
+  border-bottom: 2px solid #7a2f34
 }
 #ce-title samp {
   display: block;
@@ -424,7 +523,7 @@ main {
   display: block;
   position: relative;
   grid-area: props;
-  background-color: #1B1B1E;
+  background-color: #1b1b1e;
   background-image: url('../assets/img/props-background.jpg');
   background-position: left top;
   background-repeat: repeat;
@@ -444,13 +543,13 @@ main {
   position: relative;
   grid-area: footer;
   color: #222125;
-  background-color: #7A2F34;
+  background-color: #7a2f34;
 }
 
 /* LOADING PANEL */
 #ce-loading {
   color: #222125;
-  background-color: #7A2F34;
+  background-color: #7a2f34;
 }
 
 
