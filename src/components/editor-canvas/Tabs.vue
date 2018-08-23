@@ -116,6 +116,7 @@ export default {
           itemWidths.splice(itemWidths.indexOf(max), 1);
         }
 
+        // Add width of arrow buttons and 1px border
         return w + 41;
       };
 

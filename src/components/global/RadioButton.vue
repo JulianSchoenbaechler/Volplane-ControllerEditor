@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'radio',
+  name: 'v-radio',
   inheritAttrs: false,
   model: {
     prop: 'checked',
@@ -42,7 +42,7 @@ label {
   display: block;
   width: auto;
   height: 20px;
-  max-width: auto;
+  max-width: none;
   max-height: 20px;
   margin: 4px 10px;
   padding: 0;

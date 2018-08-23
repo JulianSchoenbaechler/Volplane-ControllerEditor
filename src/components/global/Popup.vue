@@ -5,7 +5,25 @@
         <h1>{{ title }}</h1>
         <form autocomplete="off" @submit.prevent="$emit('submit', $event.target.elements)">
           <slot>
-            <label><input type="checkbox" name="checkbox" value="value">Text</label>
+            <!-- <label><input type="checkbox" name="checkbox" value="value">Text</label> -->
+            <v-checkbox v-model="cb">Check</v-checkbox>
+            <v-radio v-model="rb1" name="select" @change="changeSelect(1)">Select 1</v-radio>
+            <v-radio v-model="rb2" name="select" @change="changeSelect(2)">Select 2</v-radio>
+            <v-radio v-model="rb3" name="select" @change="changeSelect(3)">Select 3</v-radio>
+            <input type="color" />
+            <label>This is a label.</label>
+            <input type="text" value="Hello" />
+            <input type="number" value="5" />
+            <textarea>Hello there</textarea>
+            <v-select
+              v-model="selection"
+              :options="[
+                {
+                  value: 'Tests',
+                  options: ['test1','test2','test3']
+                }
+              ]"
+            />
             <input type="button" value="Cancel" />
             <input type="submit" value="OK" />
           </slot>
@@ -18,6 +36,22 @@
 <script>
 export default {
   props: ['title'],
+  data() {
+    return {
+      cb: false,
+      rb1: true,
+      rb2: false,
+      rb3: false,
+      selection: 'gaga',
+    };
+  },
+  methods: {
+    changeSelect(n) {
+      this.rb1 = n === 1;
+      this.rb2 = n === 2;
+      this.rb3 = n === 3;
+    },
+  },
 };
 </script>
 
@@ -54,5 +88,9 @@ export default {
   text-align: center;
   color: #7a2f34;
   border-bottom: 1px solid #7a2f34;
+}
+.popup-wrapper form {
+  flex: 0 1 auto;
+  overflow: auto;
 }
 </style>
