@@ -6,6 +6,7 @@ import Store from './store';
 import Popup from './components/global/Popup.vue';
 import CheckBox from './components/global/CheckBox.vue';
 import RadioButton from './components/global/RadioButton.vue';
+import Select from './components/global/Select.vue';
 
 /* eslint-disable */
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -22,6 +23,7 @@ import {
   faAngleLeft,
   faCheckSquare,
   faDotCircle,
+  faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -37,13 +39,15 @@ library.add(
   faCheckSquare,
   faCircle,
   faDotCircle,
+  faSortDown,
 );
 
 // Global components
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('popup', Popup);
-Vue.component('checkbox', CheckBox);
-Vue.component('radio', RadioButton);
+Vue.component('v-checkbox', CheckBox);
+Vue.component('v-radio', RadioButton);
+Vue.component('v-select', Select);
 
 Vue.config.productionTip = false;
 

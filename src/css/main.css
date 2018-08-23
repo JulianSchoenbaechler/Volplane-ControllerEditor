@@ -359,11 +359,11 @@ input {
   display: block;
   width: auto;
   height: 20px;
-  max-width: auto;
+  max-width: none;
   max-height: 20px;
   margin: 4px 10px;
   padding: 0 4px;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 200;
   font-style: normal;
   font-size: 14px;
@@ -395,7 +395,7 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"] {
   min-width: 100px;
-  min-height: auto;
+  min-height: none;
   line-height: normal !important;
   cursor: pointer;
   outline: none;
@@ -414,7 +414,7 @@ textarea {
   display: block;
   margin: 4px 10px;
   padding: 4px;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 200;
   font-style: normal;
   font-size: 14px;
@@ -432,11 +432,11 @@ select {
   display: block;
   width: auto;
   height: 20px;
-  max-width: auto;
+  max-width: none;
   max-height: 20px;
   margin: 4px 10px;
-  padding: 0 14px 0 0;
-  font-family: 'Montserrat';
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 200;
   font-style: normal;
   font-size: 14px;
@@ -451,6 +451,26 @@ select {
 select:active, select:hover {
     background-color: #353438;
     transition: all 0.2s ease-in-out;
+}
+textarea:invalid,
+input:invalid,
+input:focus,
+select:focus,
+option:focus {
+  outline: none;
+  box-shadow: none;
+}
+label {
+  display: inline-block;
+  margin: 10px 10px 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+  line-height: normal;
+  color: #f8f8ec;
+  cursor: pointer;
 }
 
 /* APP CONTAINER */
