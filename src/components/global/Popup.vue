@@ -20,7 +20,7 @@
               :options="[
                 {
                   value: 'Tests',
-                  options: ['test1','test2','test3']
+                  options: ['First Test','Second Test','Third Test']
                 }
               ]"
             />

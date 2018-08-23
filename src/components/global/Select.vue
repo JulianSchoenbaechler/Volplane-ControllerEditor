@@ -16,12 +16,13 @@
     />
     <font-awesome-icon icon="sort-down" />
     <ul>
-      <!-- TODO: only display items that start with input value -->
       <li
         v-for="(item, i) in computedOptions"
         :key="'select-' + i"
         :class="item.class"
-        v-show="item.class === 'category' || freshOpened || item.value.startsWith(localValue)"
+        v-show="item.class === 'category' ||
+          freshOpened ||
+          item.value.toLowerCase().startsWith(localValue.toLowerCase())"
         @click="item.class !== 'category' ?
           valueChange(item.value, $event) :
           $event.stopPropagation()"
