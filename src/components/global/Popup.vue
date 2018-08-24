@@ -24,6 +24,7 @@
                 }
               ]"
             />
+            <v-color v-model="color" />
             <input type="button" value="Cancel" />
             <input type="submit" value="OK" />
           </slot>
@@ -43,6 +44,7 @@ export default {
       rb2: false,
       rb3: false,
       selection: 'gaga',
+      color: '#FF0000',
     };
   },
   methods: {
