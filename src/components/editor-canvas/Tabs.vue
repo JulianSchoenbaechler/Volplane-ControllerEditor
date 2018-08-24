@@ -1,28 +1,46 @@
 <template>
   <div id="ce-canvas-tabs">
+    <transition name="fade">
+      <!-- delete view confirmation popup -->
+      <popup v-if="deletePopup" title="Delete View" @submit="remove">
+        <p>
+          Are you sure you want to remove the view <em>{{ tempView }}</em> with all its
+          contents from the controller? This action cannot be undone.
+        </p>
+        <div class="split right">
+          <input type="button" value="No" @click="deletePopup = false" />
+        </div>
+        <div class="split left">
+          <input type="submit" value="Yes" />
+        </div>
+      </popup>
+    </transition>
     <ul ref="container">
       <li v-show="arrow.left" class="small" @click="shiftTabs(true, $event)">
         <span class="inline-control">
           <font-awesome-icon icon="angle-left" />
         </span>
       </li>
-      <li v-for="(visible, i) in visibility"
-          :key="`view-${i}`"
-          v-show="visible.value"
-          :class="{
-            default: views[i].default,
-            active: visible.active,
-            stretch: overflow,
-          }"
-          @click="setActive(views[i].name, $event)">
+      <li
+        v-for="(visible, i) in visibility"
+        :key="`view-${i}`"
+        v-show="visible.value"
+        :class="{
+          default: views[i].default,
+          active: visible.active,
+          stretch: overflow,
+        }"
+        @click="setActive(views[i].name, $event)"
+      >
         {{ views[i].name }}
-        <span class="inline-control delete" @click="remove(views[i].name, $event)">
+        <span class="inline-control delete" @click="removeRequest(views[i].name, $event)">
           <font-awesome-icon icon="times" />
         </span>
         <span
-            v-if="!views[i].default"
-            class="inline-control make-default"
-            @click="makeDefault(views[i].name, $event)">
+          v-if="!views[i].default"
+          class="inline-control make-default"
+          @click="makeDefault(views[i].name, $event)"
+        >
           <font-awesome-icon icon="bullseye" title="Make default" />
         </span>
       </li>
@@ -48,6 +66,8 @@ export default {
         right: false,
         left: false,
       },
+      tempView: null,
+      deletePopup: false,
     };
   },
 
@@ -205,25 +225,60 @@ export default {
     setActive(name = 'noname', event = null) {
       if (event) event.stopPropagation();
 
+      let foundView = false;
+
       this.visibility.forEach((v, i) => {
-        v.active = this.views[i].name === name;
+        if (i < this.views.length) {
+          v.active = this.views[i].name === name;
+          foundView = true;
+        }
       });
 
-      this.$store.commit('editor/setActiveView', name);
+      if (foundView) {
+        this.$store.commit('editor/setActiveView', name);
+      } else {
+        this.$store.commit('editor/setActiveView', '');
+      }
     },
 
     // Remove view button
     // Event handler
-    remove(name = 'noname', event = null) {
+    removeRequest(name = null, event = null) {
       if (event) event.stopPropagation();
-      console.log(`Delete view: ${name}`);
+
+      if (this.deletePopup) return;
+
+      this.tempView = name;
+      this.deletePopup = true;
     },
 
     // Make default view button
+    // Instantly commiting store change
     // Event handler
-    makeDefault(name = 'noname', event = null) {
+    makeDefault(name = null, event = null) {
       if (event) event.stopPropagation();
-      console.log(`Make default view: ${name}`);
+
+      this.$store.commit('controller/makeDefaultView', name);
+    },
+
+    // Remove view with name
+    remove() {
+      this.$store.commit('controller/removeView', this.tempView);
+
+      // Removed the active view?
+      // Set to the first view
+      if (
+        this.tempView === this.$store.getters['editor/activeView'] &&
+        this.views.length > 0
+      ) {
+        this.setActive(this.views[0].name);
+      } else {
+        this.setActive();
+      }
+
+      // Close popup and reset staged view
+      this.deletePopup = false;
+      this.tempView = null;
     },
   },
 

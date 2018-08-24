@@ -1,5 +1,5 @@
 <template>
-  <label>
+  <label class="wrapper">
     <input
       type="checkbox"
       v-bind="$attrs"

@@ -23,6 +23,8 @@ export default new Vuex.Store({
 
   // Global mutations
   mutations: {
+
+    // Loading panel enable/disable
     setLoadingPanel(state, value = true) {
       state.loadingPanel = value;
     },
@@ -30,11 +32,6 @@ export default new Vuex.Store({
 
   // Global actions
   actions: {
-
-    // Loading panel enable/disable
-    setLoadingPanel(context, value = true) {
-      context.commit('setLoadingPanel', value);
-    },
 
     // Loading controller controller data
     async loadController(context, controller = '') {

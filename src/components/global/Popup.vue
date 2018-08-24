@@ -1,57 +1,44 @@
 <template>
-  <transition name="fade">
-    <div class="popup-container full-screen">
-      <div class="popup-wrapper">
-        <h1>{{ title }}</h1>
-        <form autocomplete="off" @submit.prevent="$emit('submit', $event.target.elements)">
-          <slot>
-            <!-- <label><input type="checkbox" name="checkbox" value="value">Text</label> -->
-            <v-checkbox v-model="cb">Check</v-checkbox>
-            <v-radio v-model="rb1" name="select" @change="changeSelect(1)">Select 1</v-radio>
-            <v-radio v-model="rb2" name="select" @change="changeSelect(2)">Select 2</v-radio>
-            <v-radio v-model="rb3" name="select" @change="changeSelect(3)">Select 3</v-radio>
-            <input type="color" />
-            <label>This is a label.</label>
-            <input type="text" value="Hello" />
-            <input type="number" value="5" />
-            <textarea>Hello there</textarea>
-            <v-select
-              v-model="selection"
-              :options="[
-                {
-                  value: 'Tests',
-                  options: ['First Test','Second Test','Third Test']
-                }
-              ]"
-            />
-            <v-color v-model="color" />
+  <div class="popup-container full-screen">
+    <div class="popup-wrapper">
+      <h1>{{ title }}</h1>
+      <form
+        autocomplete="off"
+        @submit.prevent="submitPopup($event)"
+        v-on="listeners"
+      >
+        <slot>
+          <div class="split right">
             <input type="button" value="Cancel" />
+          </div>
+          <div class="split left">
             <input type="submit" value="OK" />
-          </slot>
-        </form>
-      </div>
+          </div>
+        </slot>
+      </form>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['title'],
-  data() {
-    return {
-      cb: false,
-      rb1: true,
-      rb2: false,
-      rb3: false,
-      selection: 'gaga',
-      color: '#FF0000',
-    };
+  name: 'popup',
+  props: {
+    title: String,
+    handler: Function,
+  },
+  computed: {
+    // The component event listeners
+    // Without the ones that are handled in code
+    listeners() {
+      const { submit, ...listeners } = this.$listeners;
+      return listeners;
+    },
   },
   methods: {
-    changeSelect(n) {
-      this.rb1 = n === 1;
-      this.rb2 = n === 2;
-      this.rb3 = n === 3;
+    submitPopup(e = null) {
+      if (this.handler) this.handler();
+      this.$emit('submit', e.target.elements);
     },
   },
 };
@@ -94,5 +81,44 @@ export default {
 .popup-wrapper form {
   flex: 0 1 auto;
   overflow: auto;
+}
+.popup-wrapper p {
+  position: relative;
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0 10px 20px;
+  text-align: justify;
+  font-size: 14px;
+  font-weight: 200;
+  font-style: normal;
+  line-height: normal;
+}
+.popup-wrapper p em,
+.popup-wrapper p i,
+.popup-wrapper p b,
+.popup-wrapper p u {
+  color: #cdaf7b;
+}
+.popup-wrapper .split {
+  display: inline-block;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+}
+.popup-wrapper .split input {
+  display: inline-block;
+}
+.popup-wrapper .left {
+  text-align: left;
+}
+.popup-wrapper .left input {
+  margin-left: 20px;
+}
+.popup-wrapper .right {
+  text-align: right;
+}
+.popup-wrapper .right input {
+  margin-right: 20px;
 }
 </style>

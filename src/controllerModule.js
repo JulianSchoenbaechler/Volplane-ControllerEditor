@@ -42,5 +42,30 @@ export default {
       state.deviceMotion = deviceMotion;
       state.sensitivity = sensitivity;
     },
+
+    // Set the default view by name
+    makeDefaultView(state, name = null) {
+      if (name) {
+        state.views.forEach((v) => {
+          if (v.name === name) {
+            v.default = true;
+          } else {
+            v.default = false;
+          }
+        });
+      }
+    },
+
+    // Remove a view by name
+    removeView(state, name = null) {
+      if (name) {
+        const i = state.views.findIndex(v => v.name === name);
+
+        // If view found, remove it
+        if (i > -1) {
+          state.views.splice(i, 1);
+        }
+      }
+    },
   },
 };
