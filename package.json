@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "npm": "^6.4.0",
+    "pickr-widget": "^0.2.2",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
   },

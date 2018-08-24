@@ -7,6 +7,7 @@ import Popup from './components/global/Popup.vue';
 import CheckBox from './components/global/CheckBox.vue';
 import RadioButton from './components/global/RadioButton.vue';
 import Select from './components/global/Select.vue';
+import ColorSelect from './components/global/ColorSelect.vue';
 
 /* eslint-disable */
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -48,6 +49,7 @@ Vue.component('popup', Popup);
 Vue.component('v-checkbox', CheckBox);
 Vue.component('v-radio', RadioButton);
 Vue.component('v-select', Select);
+Vue.component('v-color', ColorSelect);
 
 Vue.config.productionTip = false;
 

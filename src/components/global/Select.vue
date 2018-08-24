@@ -179,7 +179,7 @@ export default {
   position: relative;
   width: auto;
   height: 20px;
-  max-width: auto;
+  max-width: none;
   max-height: 20px;
   margin: 0 10px;
   padding: 0;
@@ -222,6 +222,7 @@ export default {
   box-sizing: border-box;
   transform: scaleY(0);
   transform-origin: top;
+  z-index: 1;
   transition: transform 0.2s ease-in-out;
 }
 .select.open ul {
