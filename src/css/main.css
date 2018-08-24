@@ -301,9 +301,11 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+/*! Controller Editor Style Sheet v1.1.0 | GPL v3 | https://julian-s.ch/ */
+
 /*
  * Controller Editor Style Sheet
- * Copyright 2018 by Julian Schoenbaechler (http://julian-s.ch/). All rights reserved.
+ * Copyright 2018 by Julian Schoenbaechler (https://julian-s.ch/). All rights reserved.
  * Version      v1.1.0
  * License      GPL v3
  */
@@ -571,17 +573,6 @@ main {
   color: #222125;
   background-color: #7a2f34;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Helper classes

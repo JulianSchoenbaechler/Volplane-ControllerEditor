@@ -1,24 +1,10 @@
 // eslint-disable-next-line
 const webpack = require('webpack');
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
   configureWebpack: {
-    /* rules: [
-      {
-        test: /\.(svg)(\?.*)?$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 4096,
-              name: 'fonts/[name].[hash:8].[ext]',
-            },
-          },
-        ],
-      },
-    ], */
-    resolve: {
+    /* resolve: {
       alias: {
         jquery: path.resolve(__dirname, './node_modules/jquery/src/jquery'),
       },
@@ -29,7 +15,7 @@ module.exports = {
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
       }),
-    ],
+    ], */
   },
   chainWebpack: (config) => {
     config.module
