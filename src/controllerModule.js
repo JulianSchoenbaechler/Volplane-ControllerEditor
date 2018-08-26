@@ -56,6 +56,21 @@ export default {
       }
     },
 
+    // Add a new view by name
+    addView(state, name = null) {
+      if (name) {
+        const { layout: lastLayout } = state.views[state.views.length - 1];
+
+        state.views.push({
+          name,
+          default: false,
+          color: 'rgb(31, 29, 42)',
+          layout: lastLayout,
+          content: [],
+        });
+      }
+    },
+
     // Remove a view by name
     removeView(state, name = null) {
       if (name) {

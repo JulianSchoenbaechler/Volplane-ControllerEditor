@@ -1,26 +1,60 @@
 <template>
   <div id="ce-canvas-tabs">
     <transition name="fade">
-      <!-- delete view confirmation popup -->
-      <popup v-if="deletePopup" title="Delete View" @submit="remove">
+
+      <!-- remove view confirmation popup -->
+      <popup v-if="removePopup" title="Delete View" @submit="remove">
         <p>
-          Are you sure you want to remove the view <em>{{ tempView }}</em> with all its
-          contents from the controller? This action cannot be undone.
+          Are you sure you want to remove the view <em>{{ tempView }}</em> with all its contents
+          from the controller? This action cannot be undone.
         </p>
         <div class="split right">
-          <input type="button" value="No" @click="deletePopup = false" />
+          <input type="button" value="No" @click="removePopup = false" />
         </div>
         <div class="split left">
-          <input type="submit" value="Yes" />
+          <input type="submit" value="Yes" v-autofocus />
         </div>
       </popup>
+
+      <!-- add view confirmation popup -->
+      <popup v-if="addPopup" title="Add View" @submit="add">
+        <p>
+          Enter a <strong>name identifier</strong> for the new view. The name identifier is the
+          direct connection between Unity and this controller view and will be used to access it
+          from code.
+        </p>
+        <input
+          type="text"
+          v-model="tempView"
+          @input="sanitize"
+          v-autofocus
+        />
+        <p v-if="addError" class="color-red">
+          {{ addError }}
+        </p>
+        <p>
+          A view name should not contain any special characters with the exception of <b>-</b>
+          (dash) and <b>_</b> (underline).
+        </p>
+        <div class="split right">
+          <input type="button" value="Cancel" @click="addPopup = false" />
+        </div>
+        <div class="split left">
+          <input type="submit" value="OK" />
+        </div>
+      </popup>
+
     </transition>
+
+    <!-- tabs -->
     <ul ref="container">
+
       <li v-show="arrow.left" class="small" @click="shiftTabs(true, $event)">
         <span class="inline-control">
           <font-awesome-icon icon="angle-left" />
         </span>
       </li>
+
       <li
         v-for="(visible, i) in visibility"
         :key="`view-${i}`"
@@ -44,17 +78,26 @@
           <font-awesome-icon icon="bullseye" title="Make default" />
         </span>
       </li>
-      <!-- TODO: add (+) control -> adding new view -->
+
       <li v-show="arrow.right" class="small" @click="shiftTabs(false, $event)">
         <span class="inline-control">
           <font-awesome-icon icon="angle-right" />
         </span>
       </li>
+
+      <li :class="overflow ? 'small' : 'floating'" @click="addRequest($event)">
+        <span class="inline-control">
+          <font-awesome-icon icon="plus" />
+        </span>
+      </li>
+
     </ul>
   </div>
 </template>
 
 <script>
+import sanitizeName from '../../utils/stringSanitizer';
+
 export default {
   name: 'editor-canvas-tabs',
 
@@ -67,7 +110,9 @@ export default {
         left: false,
       },
       tempView: null,
-      deletePopup: false,
+      addPopup: false,
+      addError: null,
+      removePopup: false,
     };
   },
 
@@ -75,6 +120,11 @@ export default {
     // The controller views
     views() {
       return this.$store.getters['controller/views'];
+    },
+
+    // The editors active view
+    activeView() {
+      return this.$store.getters['editor/activeView'];
     },
   },
 
@@ -122,7 +172,9 @@ export default {
     // Checks the tabs for overflow and handles the rearrangement
     handleOverflow() {
       const list = this.$refs.container;
-      const tabWidth = this.visibility.reduce((a, v) => v.width + a, 0);
+
+      // Calculate the total width of all tabs inclusive 'add' button (28px)
+      const tabWidth = this.visibility.reduce((a, v) => v.width + a, 0) + 28;
 
       // Inline function for calculating minimum space required for a specified amount of tabs.
       const minWidth = (numberOfTabs = 1) => {
@@ -241,15 +293,34 @@ export default {
       }
     },
 
+    // Sanitize 'tempView' value from special characters
+    sanitize() {
+      const sanitized = sanitizeName(this.tempView);
+
+      if (sanitized !== false) this.tempView = sanitized;
+    },
+
+    // Add view button
+    // Event handler
+    addRequest(event = null) {
+      if (event) event.stopPropagation();
+
+      if (this.addPopup) return;
+
+      this.tempView = null;
+      this.addError = null;
+      this.addPopup = true;
+    },
+
     // Remove view button
     // Event handler
     removeRequest(name = null, event = null) {
       if (event) event.stopPropagation();
 
-      if (this.deletePopup) return;
+      if (this.removePopup) return;
 
       this.tempView = name;
-      this.deletePopup = true;
+      this.removePopup = true;
     },
 
     // Make default view button
@@ -261,23 +332,42 @@ export default {
       this.$store.commit('controller/makeDefaultView', name);
     },
 
+    // Add view with name
+    add(elements) {
+      if (!this.tempView || this.tempView.length < 3) {
+        this.addError = 'The view name identifier must be at least 3 characters long!';
+        elements[0].select();
+        return;
+      }
+
+      if (this.views.some(v => v.name === this.tempView)) {
+        this.addError = 'A view with this name identifier already exists!';
+        elements[0].select();
+        return;
+      }
+
+      // Adding new view
+      this.$store.commit('controller/addView', this.tempView);
+      this.$store.commit('editor/setActiveView', this.tempView);
+
+      this.tempView = null;
+      this.addPopup = false;
+    },
+
     // Remove view with name
     remove() {
       this.$store.commit('controller/removeView', this.tempView);
 
       // Removed the active view?
       // Set to the first view
-      if (
-        this.tempView === this.$store.getters['editor/activeView'] &&
-        this.views.length > 0
-      ) {
+      if (this.tempView === this.activeView && this.views.length > 0) {
         this.setActive(this.views[0].name);
       } else {
         this.setActive();
       }
 
       // Close popup and reset staged view
-      this.deletePopup = false;
+      this.removePopup = false;
       this.tempView = null;
     },
   },
@@ -311,6 +401,8 @@ export default {
 }
 #ce-canvas-tabs ul {
   display: flex;
+  flex-basis: 100%;
+  flex-flow: row nowrap;
   width: 100%;
   height: 32px;
   max-width: 100%;
@@ -319,7 +411,6 @@ export default {
   padding: 0;
   list-style: none;
   overflow: hidden;
-  flex-flow: row nowrap;
   background-color: #414044;
   box-shadow: 0 0 4px 4px #222125;
 }
@@ -352,6 +443,10 @@ export default {
 #ce-canvas-tabs li.small {
   padding: 0 4px;
 }
+#ce-canvas-tabs li.floating {
+  padding: 0 8px;
+  background-color: transparent;
+}
 #ce-canvas-tabs li.stretch:not(.small) {
   /* small list items never grow */
   flex-grow: 1;
@@ -369,7 +464,8 @@ export default {
   line-height: 12px;
   text-align: center;
 }
-#ce-canvas-tabs li.small .inline-control {
+#ce-canvas-tabs li.small .inline-control,
+#ce-canvas-tabs li.floating .inline-control {
   visibility: visible;
   margin: 10px 0;
 }

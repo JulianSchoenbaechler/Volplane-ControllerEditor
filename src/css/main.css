@@ -664,6 +664,19 @@ main {
   float: left;
 }
 
+/*
+ * Colors
+ */
+.color-red {
+  color: #c97a7e;
+}
+.color-blue {
+  color: #8fbcd4;
+}
+.color-green {
+  color: #6ac174;
+}
+
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ("mobile first") styles.

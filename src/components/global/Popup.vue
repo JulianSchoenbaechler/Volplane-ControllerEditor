@@ -82,6 +82,18 @@ export default {
   flex: 0 1 auto;
   overflow: auto;
 }
+.popup-wrapper input {
+  position: relative;
+  display: block;
+  margin: 0 10px 20px;
+}
+.popup-wrapper input[type="text"],
+.popup-wrapper input[type="number"] {
+  position: relative;
+  display: block;
+  width: 220px;
+  margin: 0 auto 20px;
+}
 .popup-wrapper p {
   position: relative;
   display: block;
@@ -120,5 +132,8 @@ export default {
 }
 .popup-wrapper .right input {
   margin-right: 20px;
+}
+.popup-wrapper .center {
+  text-align: center;
 }
 </style>

@@ -25,6 +25,7 @@ import {
   faCheckSquare,
   faDotCircle,
   faSortDown,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -41,6 +42,7 @@ library.add(
   faCircle,
   faDotCircle,
   faSortDown,
+  faPlus,
 );
 
 // Global components
@@ -50,6 +52,14 @@ Vue.component('v-checkbox', CheckBox);
 Vue.component('v-radio', RadioButton);
 Vue.component('v-select', Select);
 Vue.component('v-color', ColorSelect);
+
+// Global directives
+Vue.directive('autofocus', {
+  // Autofocus for input elements
+  inserted: (el) => {
+    el.focus();
+  },
+});
 
 Vue.config.productionTip = false;
 
