@@ -122,7 +122,7 @@ export default {
       return this.$store.getters['controller/views'];
     },
 
-    // The editors active view
+    // The editors active view name identifier
     activeView() {
       return this.$store.getters['editor/activeView'];
     },
@@ -395,9 +395,11 @@ export default {
   display: block;
   position: relative;
   width: 100%;
-  height: auto;
+  height: 32px;
   margin: 0;
   padding: 0;
+  box-shadow: 0 0 4px 4px #222125;
+  z-index: 1;
 }
 #ce-canvas-tabs ul {
   display: flex;
@@ -412,7 +414,6 @@ export default {
   list-style: none;
   overflow: hidden;
   background-color: #414044;
-  box-shadow: 0 0 4px 4px #222125;
 }
 #ce-canvas-tabs li {
   display: inline-block;
