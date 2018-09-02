@@ -153,6 +153,21 @@ export default {
       });
     },
 
+    // Handle keydown event
+    // Switch mode for shift-key
+    keydownHandler(e) {
+      if (this.mode === 'move') return;
+      if (e.shiftKey) this.mode = 'move';
+    },
+
+
+    // Handle keyup event
+    // Switch mode for shift-key
+    keyupHandler(e) {
+      if (this.mode === 'edit') return;
+      if (!e.shiftKey) this.mode = 'edit';
+    },
+
     test() {
       console.log('test');
     },
@@ -162,12 +177,18 @@ export default {
     this.$nextTick(() => {
       // Listen for window resizing event
       window.addEventListener('resize', this.recalculateConsoleSize);
+
+      // Listen for window keydown/keyup event
+      window.addEventListener('keydown', this.keydownHandler);
+      window.addEventListener('keyup', this.keyupHandler);
     });
   },
 
   beforeDestroy() {
     // Unsubscribe event listener(s)
     window.removeEventListener('resize', this.recalculateConsoleSize);
+    window.removeEventListener('keydown', this.keydownHandler);
+    window.removeEventListener('keyup', this.keyupHandler);
   },
 };
 </script>
