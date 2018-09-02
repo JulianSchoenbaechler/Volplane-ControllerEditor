@@ -2,21 +2,29 @@
   <div
     id="ce-canvas-workspace"
     ref="workspace"
+    v-dragscroll="mode === 'move'"
+    :class="mode === 'edit' ? 'mode-edit' : 'mode-move'"
     @wheel.prevent="handleMouseWheel($event)"
     @mousewheel.prevent="handleMouseWheel($event, true)"
+
   >
     <div
       class="virtual-console"
       :style="consoleStyle"
     >
-
     </div>
   </div>
 </template>
 
 <script>
+import { dragscroll } from 'vue-dragscroll';
+
 export default {
   name: 'editor-canvas-workspace',
+
+  directives: {
+    dragscroll,
+  },
 
   data() {
     return {
@@ -31,6 +39,7 @@ export default {
         'margin-left': '-180px',
       },
       scrollable: false,
+      mode: 'edit',
     };
   },
 
@@ -55,6 +64,12 @@ export default {
   watch: {
     // Resize virtual controler according to zoom level
     zoomLevel: 'recalculateConsoleSize',
+
+    // Switch view
+    activeView() {
+      this.$store.commit('editor/setZoomLevel', 1);
+      this.recalculateConsoleSize();
+    },
   },
 
   methods: {
@@ -90,8 +105,8 @@ export default {
     recalculateConsoleSize(zoomLevel) {
       const level = parseFloat(zoomLevel) || this.zoomLevel;
       const $ws = this.$refs.workspace;
-      const initialX = 360;
-      const initialY = 640;
+      const initialX = this.view.layout !== 'landscape' ? 360 : 640;
+      const initialY = this.view.layout !== 'landscape' ? 640 : 360;
 
       const width = initialX * level;
       const height = initialY * level;
@@ -117,8 +132,8 @@ export default {
 
       // Calculate scroll position ratio
       const scrollRatio = {
-        x: ($ws.scrollLeft / ($ws.scrollWidth - $ws.clientWidth)) || 0.5,
-        y: ($ws.scrollTop / ($ws.scrollHeight - $ws.clientHeight)) || 0.5,
+        x: ($ws.scrollLeft / ($ws.scrollWidth - $ws.clientWidth)),
+        y: ($ws.scrollTop / ($ws.scrollHeight - $ws.clientHeight)),
       };
 
       // Scroll to position after applying changes
@@ -126,8 +141,10 @@ export default {
         if (($ws.scrollWidth - $ws.clientWidth) > 0 ||
             ($ws.scrollHeight - $ws.clientHeight) > 0) {
           $ws.scrollTo(
-            ($ws.scrollWidth - $ws.clientWidth) * scrollRatio.x,
-            ($ws.scrollHeight - $ws.clientHeight) * scrollRatio.y,
+            ($ws.scrollWidth - $ws.clientWidth) *
+              (Number.isNaN(scrollRatio.x) ? 0.5 : scrollRatio.x),
+            ($ws.scrollHeight - $ws.clientHeight) *
+              (Number.isNaN(scrollRatio.y) ? 0.5 : scrollRatio.y),
           );
           this.scrollable = true;
         } else {
@@ -163,7 +180,13 @@ export default {
   height: calc(100% - 32px);
   max-width: 100%;
   max-height: calc(100% - 32px);
-  overflow: auto;
+  overflow: hidden;
+}
+#ce-canvas-workspace.mode-edit {
+  cursor: auto;
+}
+#ce-canvas-workspace.mode-move {
+  cursor: move;
 }
 .virtual-console {
   display: block;
