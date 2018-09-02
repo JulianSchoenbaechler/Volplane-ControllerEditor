@@ -7,10 +7,7 @@
   >
     <div
       class="virtual-console"
-      :style="{
-        width: size.x + 'px',
-        height: size.y + 'px',
-      }"
+      :style="consoleStyle"
     >
 
     </div>
@@ -23,10 +20,17 @@ export default {
 
   data() {
     return {
-      size: {
-        x: 360,
-        y: 640,
+      consoleStyle: {
+        width: '360px',
+        height: '640px',
+        top: '50%',
+        left: '50%',
+        'margin-top': '-320px',
+        'margin-right': '0',
+        'margin-bottom': '0',
+        'margin-left': '-180px',
       },
+      scrollable: false,
     };
   },
 
@@ -50,13 +54,7 @@ export default {
 
   watch: {
     // Resize virtual controler according to zoom level
-    zoomLevel(level) {
-      const initialX = 360;
-      const initialY = 640;
-
-      this.size.x = initialX * level;
-      this.size.y = initialY * level;
-    },
+    zoomLevel: 'recalculateConsoleSize',
   },
 
   methods: {
@@ -88,9 +86,71 @@ export default {
       return false;
     },
 
+    // Recalculate virtual console size
+    recalculateConsoleSize(zoomLevel) {
+      const level = parseFloat(zoomLevel) || this.zoomLevel;
+      const $ws = this.$refs.workspace;
+      const initialX = 360;
+      const initialY = 640;
+
+      const width = initialX * level;
+      const height = initialY * level;
+
+      this.consoleStyle.width = `${width}px`;
+      this.consoleStyle.height = `${height}px`;
+
+      if ($ws.clientWidth < width) {
+        this.consoleStyle.left = 0;
+        this.consoleStyle['margin-left'] = 0;
+      } else {
+        this.consoleStyle.left = '50%';
+        this.consoleStyle['margin-left'] = `${-width / 2}px`;
+      }
+
+      if ($ws.clientHeight < height) {
+        this.consoleStyle.top = 0;
+        this.consoleStyle['margin-top'] = 0;
+      } else {
+        this.consoleStyle.top = '50%';
+        this.consoleStyle['margin-top'] = `${-height / 2}px`;
+      }
+
+      // Calculate scroll position ratio
+      const scrollRatio = {
+        x: ($ws.scrollLeft / ($ws.scrollWidth - $ws.clientWidth)) || 0.5,
+        y: ($ws.scrollTop / ($ws.scrollHeight - $ws.clientHeight)) || 0.5,
+      };
+
+      // Scroll to position after applying changes
+      this.$nextTick(() => {
+        if (($ws.scrollWidth - $ws.clientWidth) > 0 ||
+            ($ws.scrollHeight - $ws.clientHeight) > 0) {
+          $ws.scrollTo(
+            ($ws.scrollWidth - $ws.clientWidth) * scrollRatio.x,
+            ($ws.scrollHeight - $ws.clientHeight) * scrollRatio.y,
+          );
+          this.scrollable = true;
+        } else {
+          this.scrollable = false;
+        }
+      });
+    },
+
     test() {
       console.log('test');
     },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      // Listen for window resizing event
+      window.addEventListener('resize', this.recalculateConsoleSize);
+    });
+  },
+
+  beforeDestroy() {
+    // Unsubscribe event listener(s)
+    window.removeEventListener('resize', this.recalculateConsoleSize);
   },
 };
 </script>
@@ -107,14 +167,12 @@ export default {
 }
 .virtual-console {
   display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
   width: 360px;
   height: 640px;
-  margin: auto;
+  margin: -320px 0 0 -180px;
   padding: 0;
   text-align: center;
   background-image: url('../../assets/img/pirate.jpg');
