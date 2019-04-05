@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Pickr from 'pickr-widget/dist/pickr.min';
+import Pickr from '@simonwep/pickr/dist/pickr.min';
 
 let pickr = null;
 

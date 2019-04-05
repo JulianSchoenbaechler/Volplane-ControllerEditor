@@ -1,5 +1,6 @@
 <template>
-  <section id="ce-toolbox"></section>
+  <section id="ce-toolbox">
+  </section>
 </template>
 
 <script>

@@ -1,4 +1,4 @@
-/*! pickr styles | MIT | Simon Reinisch (https://simonwep.github.io/pickr/), modified by Julian Schoenbaechler (https://julian-s.ch) */
+/*! Pickr 0.4.5 MIT | https://github.com/Simonwep/pickr | modified by Julian Schoenbaechler (https://julian-s.ch) */
 .pickr {
   position: relative;
   overflow: visible;
@@ -19,10 +19,10 @@
   transition: background-color 0.2s ease-in-out;
 }
 .pickr .pcr-button:before {
-  background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><path fill='white' d='M1,0H2V1H1V0ZM0,1H1V2H0V1Z'/><path fill='gray' d='M0,0H1V1H0V0ZM1,1H2V2H1V1Z'/></svg>");
-  background-size: 0.5em;
-  border-radius: 4px;
+  background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path fill="white" d="M1,0H2V1H1V0ZM0,1H1V2H0V1Z"/><path fill="gray" d="M0,0H1V1H0V0ZM1,1H2V2H1V1Z"/></svg>');
+  background-size: .5em;
   z-index: -1;
+  z-index: auto;
 }
 .pickr .pcr-button:after,
 .pickr .pcr-button:before {
@@ -32,21 +32,43 @@
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 4px;
 }
 .pickr .pcr-button:after {
-  background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50' stroke='%2342445A' stroke-width='5px' stroke-linecap='round'><path d='M45,45L5,5'></path><path d='M45,5L5,45'></path></svg>") no-repeat 50%;
+  transition: background-color 0.2s ease-in-out;
+  background: currentColor;
+}
+.pickr .pcr-button.clear {
+  background-size: 70%;
+}
+.pickr .pcr-button.clear:before {
   opacity: 0;
 }
-.pickr .pcr-button.clear:after {
-  opacity: 1;
+.pickr .pcr-button.clear:focus {
+  box-shadow: none;
 }
 .pickr .pcr-button.disabled {
   cursor: not-allowed;
 }
+.pcr-app button,
+.pcr-app input,
+.pickr button,
+.pickr input {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+}
+.pcr-app button:focus,
+.pcr-app input:focus,
+.pickr button:focus,
+.pickr input:focus {
+  box-shadow: none;
+}
 .pcr-app {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
+  z-index: 10000;
   top: 0 !important;
   left: 34px !important;
   height: 200px;
@@ -64,38 +86,123 @@
   visibility: visible;
   opacity: 1;
 }
+.pcr-app .swatches {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+@supports (display: grid) {
+  .pcr-app .swatches {
+    display: grid;
+    align-items: center;
+    justify-content: space-around;
+    grid-template-columns: repeat(auto-fit, 2px);
+  }
+}
+.pcr-app .swatches>button {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+  justify-self: center;
+  overflow: hidden;
+  background: transparent;
+  transition: background-color 0.2s ease-in-out;
+  z-index: 1;
+}
+.pcr-app .swatches>button:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path fill="white" d="M1,0H2V1H1V0ZM0,1H1V2H0V1Z"/><path fill="gray" d="M0,0H1V1H0V0ZM1,1H2V2H1V1Z"/></svg>');
+  background-size: 6px;
+  border-radius: 4px;
+  z-index: -1;
+}
+.pcr-app .swatches>button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  border: 1px solid rgba(0, 0, 0, .05);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.pcr-app .swatches>button:hover {
+  filter: brightness(1.05);
+}
 .pcr-app .pcr-interaction {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.pcr-app .pcr-interaction input {
-  margin: 10px 0 0 4px;
+.pcr-app .pcr-interaction>* {
   flex: 1 1 auto;
+  margin: 8px 0 0 4px;
 }
-.pcr-app .pcr-interaction input:first-child {
+.pcr-app .pcr-interaction *:first-child {
   margin-left: 0;
 }
+.pcr-app .pcr-interaction input {
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  color: #f8f8ec;
+  background: #353438;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+.pcr-app .pcr-interaction input:hover {
+  filter: brightness(0.9);
+}
+.pcr-app .pcr-interaction input:focus {
+  background: #222125;
+  box-shadow: none;
+}
 .pcr-app .pcr-interaction .pcr-result {
+  flex-grow: 1;
   width: auto;
   min-width: 0;
   font-size: 14px;
-}
-.pcr-app .pcr-interaction .pcr-type {
-  font-size: 12px;
+  color: #f8f8ec;
+  text-align: left;
+  cursor: text;
+  border-radius: 4px;
+  background: #353438;
+  transition: background-color 0.2s ease-in-out;
 }
 .pcr-app .pcr-interaction .pcr-type.active {
-  background-color: #222125;
+  background: #222125;
 }
 .pcr-app .pcr-interaction .pcr-clear,
 .pcr-app .pcr-interaction .pcr-save {
   min-width: 80px;
+  color: #f8f8ec;
 }
 .pcr-app .pcr-interaction .pcr-save {
   background-color: #7a2f34;
 }
+.pcr-app .pcr-interaction .pcr-clear {
+  background-color: #353438;
+}
 .pcr-app .pcr-interaction .pcr-save:hover {
   background-color: #87383c;
+  filter: brightness(1);
+}
+.pcr-app .pcr-interaction .pcr-clear:hover {
+  filter: brightness(0.9);
+}
+.pcr-app .pcr-interaction .pcr-clear:focus {
+  box-shadow: none;
 }
 .pcr-app .pcr-selection {
   display: flex;
@@ -112,12 +219,13 @@
   user-select: none;
 }
 .pcr-app .pcr-selection .pcr-color-preview {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
-  z-index: 1;
   width: 2em;
+  margin-right: 4px;
+  z-index: 1;
 }
 .pcr-app .pcr-selection .pcr-color-preview:before {
   position: absolute;
@@ -126,8 +234,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><path fill='white' d='M1,0H2V1H1V0ZM0,1H1V2H0V1Z'/><path fill='gray' d='M0,0H1V1H0V0ZM1,1H2V2H1V1Z'/></svg>");
-  background-size: 0.5em;
+  background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path fill="white" d="M1,0H2V1H1V0ZM0,1H1V2H0V1Z"/><path fill="gray" d="M0,0H1V1H0V0ZM1,1H2V2H1V1Z"/></svg>');
+  background-size: .5em;
   border-radius: 4px;
   z-index: -1;
 }
@@ -135,24 +243,24 @@
   cursor: pointer;
   border-radius: 4px 4px 0 0;
   transition: background-color 0.2s ease-in-out;
+  z-index: 2;
 }
 .pcr-app .pcr-selection .pcr-color-preview .pcr-current-color {
   border-radius: 0 0 4px 4px;
 }
-.pcr-app .pcr-selection .pcr-color-preview .pcr-current-color,
-.pcr-app .pcr-selection .pcr-color-preview .pcr-last-color {
-  background: transparent;
+.pcr-app .pcr-selection .pcr-color-preview .pcr-current-color, .pcr-app .pcr-selection .pcr-color-preview .pcr-last-color {
+  background: currentColor;
   width: 100%;
   height: 50%;
 }
-.pcr-app .pcr-selection .pcr-color-chooser,
-.pcr-app .pcr-selection .pcr-color-opacity,
-.pcr-app .pcr-selection .pcr-color-palette {
+.pcr-app .pcr-selection .pcr-color-chooser, .pcr-app .pcr-selection .pcr-color-opacity, .pcr-app .pcr-selection .pcr-color-palette {
+  display: flex;
+  flex-direction: column;
   position: relative;
   user-select: none;
 }
 .pcr-app .pcr-selection .pcr-color-palette {
-  flex-grow: 0.9;
+  width: 100%;
   z-index: 1;
 }
 .pcr-app .pcr-selection .pcr-color-palette .pcr-palette {
@@ -166,10 +274,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><path fill='white' d='M1,0H2V1H1V0ZM0,1H1V2H0V1Z'/><path fill='gray' d='M0,0H1V1H0V0ZM1,1H2V2H1V1Z'/></svg>");
+  background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path fill="white" d="M1,0H2V1H1V0ZM0,1H1V2H0V1Z"/><path fill="gray" d="M0,0H1V1H0V0ZM1,1H2V2H1V1Z"/></svg>');
   background-size: .5em;
   border-radius: 4px;
   z-index: -1;
+}
+.pcr-app .pcr-selection .pcr-color-chooser,
+.pcr-app .pcr-selection .pcr-color-opacity {
+  margin-left: 8px;
 }
 .pcr-app .pcr-selection .pcr-color-chooser .pcr-picker,
 .pcr-app .pcr-selection .pcr-color-opacity .pcr-picker {
@@ -178,14 +290,14 @@
 }
 .pcr-app .pcr-selection .pcr-color-chooser .pcr-slider,
 .pcr-app .pcr-selection .pcr-color-opacity .pcr-slider {
+  flex-grow: 1;
   width: 8px;
-  height: 100%;
   border-radius: 50em;
 }
 .pcr-app .pcr-selection .pcr-color-chooser .pcr-slider {
-  background: linear-gradient(180deg,red,#ff0,lime,cyan,blue,#f0f,red);
+  background: linear-gradient(180deg, red, #ff0, #0f0, #0ff, #00f, #f0f, red);
 }
 .pcr-app .pcr-selection .pcr-color-opacity .pcr-slider {
-  background: linear-gradient(180deg, transparent, #000), url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><path fill='white' d='M1,0H2V1H1V0ZM0,1H1V2H0V1Z'/><path fill='gray' d='M0,0H1V1H0V0ZM1,1H2V2H1V1Z'/></svg>");
-  background-size: 100%,50%;
+  background: linear-gradient(180deg, transparent, #000), url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><path fill="white" d="M1,0H2V1H1V0ZM0,1H1V2H0V1Z"/><path fill="gray" d="M0,0H1V1H0V0ZM1,1H2V2H1V1Z"/></svg>');
+  background-size: 100%, 50%;
 }
