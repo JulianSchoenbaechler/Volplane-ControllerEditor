@@ -52,7 +52,7 @@ export default new Vuex.Store({
         context.commit('controller/setControllerData', data);
 
         // Editor
-        context.commit('editor/setActiveView', context.getters['controller/views'][0].name || 'noname');
+        context.commit('editor/setActiveView', context.getters['controller/views'][0].name);
 
         context.commit('setLoadingPanel', false);
       } catch (e) {

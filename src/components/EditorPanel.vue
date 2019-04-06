@@ -1,5 +1,6 @@
 <template>
-  <section id="ce-props"></section>
+  <section id="ce-props">
+  </section>
 </template>
 
 <script>
