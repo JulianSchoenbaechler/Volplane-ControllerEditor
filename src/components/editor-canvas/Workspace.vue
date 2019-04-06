@@ -12,18 +12,33 @@
       class="virtual-console"
       :style="consoleStyle"
     >
+      <drag-resize
+        :parentLimitation="true"
+        :parentPixelW="parseInt(consoleStyle.width.slice(0, -2))"
+        :parentPixelH="parseInt(consoleStyle.height.slice(0, -2))"
+        :snapToGrid="true"
+        :gridX="10"
+        :gridY="10"
+      >
+      </drag-resize>
     </div>
   </div>
 </template>
 
 <script>
 import { dragscroll } from 'vue-dragscroll';
+import 'volplane-drag-resize/lib/volplane-drag-resize.css';
+import VolplaneDragResize from 'volplane-drag-resize';
 
 export default {
   name: 'editor-canvas-workspace',
 
   directives: {
     dragscroll,
+  },
+
+  components: {
+    dragResize: VolplaneDragResize,
   },
 
   data() {
@@ -83,6 +98,11 @@ export default {
       this.$store.commit('editor/lowerZoomLevel');
     },
 
+    // Zoom a specified amount
+    zoom(delta = 1) {
+      this.$store.commit('editor/zoom', delta);
+    },
+
     // Handle mouse wheel event
     handleMouseWheel(e = null, legacy = false) {
       if (e === null) return false;
@@ -95,9 +115,7 @@ export default {
         deltaY = -(1 / 40) * e.wheelDelta;
       }
 
-      if (deltaY < 0) this.zoomIn();
-      else this.zoomOut();
-
+      this.zoom(deltaY);
       return false;
     },
 
@@ -132,14 +150,16 @@ export default {
 
       // Calculate scroll position ratio
       const scrollRatio = {
-        x: ($ws.scrollLeft / ($ws.scrollWidth - $ws.clientWidth)),
-        y: ($ws.scrollTop / ($ws.scrollHeight - $ws.clientHeight)),
+        x: $ws.scrollLeft / ($ws.scrollWidth - $ws.clientWidth),
+        y: $ws.scrollTop / ($ws.scrollHeight - $ws.clientHeight),
       };
 
       // Scroll to position after applying changes
       this.$nextTick(() => {
-        if (($ws.scrollWidth - $ws.clientWidth) > 0 ||
-            ($ws.scrollHeight - $ws.clientHeight) > 0) {
+        if (
+          $ws.scrollWidth - $ws.clientWidth > 0 ||
+          $ws.scrollHeight - $ws.clientHeight > 0
+        ) {
           $ws.scrollTo(
             ($ws.scrollWidth - $ws.clientWidth) *
               (Number.isNaN(scrollRatio.x) ? 0.5 : scrollRatio.x),
@@ -159,7 +179,6 @@ export default {
       if (this.mode === 'move') return;
       if (e.shiftKey) this.mode = 'move';
     },
-
 
     // Handle keyup event
     // Switch mode for shift-key
@@ -219,7 +238,7 @@ export default {
   margin: -320px 0 0 -180px;
   padding: 0;
   text-align: center;
-  background-image: url('../../assets/img/pirate.jpg');
+  background-image: url("../../assets/img/pirate.jpg");
   background-size: cover;
   background-position: center;
 }

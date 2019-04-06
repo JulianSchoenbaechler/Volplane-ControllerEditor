@@ -34,28 +34,49 @@ export default {
     // Set the zoom level
     setZoomLevel(state, level = 1) {
       state.zoomLevel = level;
+
+      if (state.zoomLevel < state.minZoomLevel) {
+        state.zoomLevel = state.minZoomLevel;
+      } else if (state.zoomLevel > state.maxZoomLevel) {
+        state.zoomLevel = state.maxZoomLevel;
+      }
+
+      state.zoomLevel = Math.round(state.zoomLevel * 100) / 100;
     },
 
-    // Raise the zoom level by 0.2
+    // Raise the zoom level by 0.1
     raiseZoomLevel(state) {
-      state.zoomLevel += 0.2;
+      state.zoomLevel += 0.1;
 
       if (state.zoomLevel > state.maxZoomLevel) {
         state.zoomLevel = state.maxZoomLevel;
       }
 
-      state.zoomLevel = Math.round(state.zoomLevel * 10) / 10;
+      state.zoomLevel = Math.round(state.zoomLevel * 100) / 100;
     },
 
-    // Lower the zoom level by 0.2
+    // Lower the zoom level by 0.1
     lowerZoomLevel(state) {
-      state.zoomLevel -= 0.2;
+      state.zoomLevel -= 0.1;
 
       if (state.zoomLevel < state.minZoomLevel) {
         state.zoomLevel = state.minZoomLevel;
       }
 
-      state.zoomLevel = Math.round(state.zoomLevel * 10) / 10;
+      state.zoomLevel = Math.round(state.zoomLevel * 100) / 100;
+    },
+
+    // Zoom by a specified multiplicator of 0.05
+    zoom(state, multiplicator = 1) {
+      state.zoomLevel -= multiplicator * 0.05;
+
+      if (state.zoomLevel < state.minZoomLevel) {
+        state.zoomLevel = state.minZoomLevel;
+      } else if (state.zoomLevel > state.maxZoomLevel) {
+        state.zoomLevel = state.maxZoomLevel;
+      }
+
+      state.zoomLevel = Math.round(state.zoomLevel * 100) / 100;
     },
   },
 };
