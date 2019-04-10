@@ -12,6 +12,7 @@
       class="virtual-console"
       :style="consoleStyle"
     >
+    <!-- demo rectangle -->
       <drag-resize
         :parentLimitation="true"
         :parentPixelW="parseInt(consoleStyle.width.slice(0, -2))"
@@ -24,6 +25,21 @@
         :gridY="10"
       >
       </drag-resize>
+    </div>
+    <div id="ce-canvas-controls">
+      <span class="inline-control float-left" @click="zoomOut">
+        <font-awesome-icon icon="search-minus" />
+      </span>
+      <input
+        type="text"
+        :value="`${(zoomLevel * 100).toFixed(0)}%`"
+        @focus="$event.currentTarget.select()"
+        @input="handleZoomControl($event)"
+        @change="handleZoomControl($event, true)"
+      />
+      <span class="inline-control float-right" @click="zoomIn">
+        <font-awesome-icon icon="search-plus" />
+      </span>
     </div>
   </div>
 </template>
@@ -104,6 +120,22 @@ export default {
     // Zoom a specified amount
     zoom(delta = 1) {
       this.$store.commit('editor/zoom', delta);
+    },
+
+    // Handle manual zoom factor input
+    handleZoomControl(e = null, blur = false) {
+      if (e === null) return;
+
+      const el = e.currentTarget;
+      let val = el.value.replace(/[^0-9.]/g, '');
+      const level = Number(val) || 1;
+
+      if (blur) {
+        el.blur();
+        this.$store.commit('editor/setZoomLevel', level / 100);
+        val = (this.zoomLevel * 100).toFixed(0);
+        el.value = `${val}%`;
+      }
     },
 
     // Handle mouse wheel event
@@ -230,6 +262,38 @@ export default {
 }
 #ce-canvas-workspace.mode-move {
   cursor: move;
+}
+#ce-canvas-controls {
+  display: block;
+  position: fixed;
+  width: 120px;
+  height: auto;
+  bottom: 20px;
+  right: 0;
+  padding: 6px 10px;
+  text-align: center;
+  background-color: rgba(34, 33, 37, 0.7);
+  border-left: 2px solid #414044;
+  z-index: 999;
+}
+#ce-canvas-controls input {
+  display: inline-block;
+  position: relative;
+  width: auto;
+  max-width: 60px;
+  margin: 0 4px;
+  text-align: center;
+}
+#ce-canvas-controls .inline-control {
+  display: block;
+  position: relative;
+  width: auto;
+  height: calc(100% - 12px);
+  margin: 2px 0 0;
+  padding: 0;
+  color: #f8f8ec;
+  text-align: center;
+  cursor: pointer;
 }
 .virtual-console {
   display: block;

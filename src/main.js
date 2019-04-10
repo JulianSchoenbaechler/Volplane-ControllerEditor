@@ -25,7 +25,9 @@ import {
   faCheckSquare,
   faDotCircle,
   faSortDown,
-  faPlus
+  faPlus,
+  faSearchMinus,
+  faSearchPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -43,6 +45,8 @@ library.add(
   faDotCircle,
   faSortDown,
   faPlus,
+  faSearchMinus,
+  faSearchPlus,
 );
 
 // Global components
