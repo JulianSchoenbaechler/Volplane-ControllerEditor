@@ -6,6 +6,7 @@ import sanitizeName from './utils/stringSanitizer';
 // Store modules
 import controllerModule from './controllerModule';
 import editorModule from './editorModule';
+import historyModule from './historyModule';
 
 Vue.use(Vuex);
 
@@ -69,5 +70,8 @@ export default new Vuex.Store({
 
     // Editor module
     editor: editorModule,
+
+    // History module
+    history: historyModule,
   },
 });

@@ -74,6 +74,16 @@ new Vue({
     this.$nextTick(() => {
       const url = new URL(window.location.href);
 
+      document.onkeydown = (e) => {
+        if (e == null) { return; }
+
+        if ((e.ctrlKey || e.metaKey) && (e.keyCode === 90)) {
+          this.$store.dispatch('history/undo');
+        } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 89)) {
+          this.$store.dispatch('history/redo');
+        }
+      };
+
       // Load controller from URL parameter
       this.$store.dispatch('loadController', url.searchParams.get('controller'));
     });

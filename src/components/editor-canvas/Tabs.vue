@@ -129,6 +129,15 @@ export default {
   },
 
   watch: {
+    // Switch view
+    activeView(value) {
+      this.visibility.forEach((v, i) => {
+        if (i < this.views.length) {
+          v.active = this.views[i].name === value;
+        }
+      });
+    },
+
     // Watch for view changes (adding / removing)
     views(value) {
       const currentNumberOfViews = this.visibility.length;
