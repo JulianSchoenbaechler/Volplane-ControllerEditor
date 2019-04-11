@@ -1,3 +1,5 @@
+import deepCopy from './utils/deepCopy';
+
 export default {
   namespaced: true,
 
@@ -18,8 +20,7 @@ export default {
     // Expose the whole controller data
     controllerData(state) {
       // Deep copy....
-      // Keep attention to the memory consumption -> then again it's web-design (T.T)
-      return JSON.parse(JSON.stringify(state));
+      return deepCopy(state);
     },
 
     // The name of the loaded controller
@@ -54,10 +55,9 @@ export default {
       return JSON.stringify(state, null, 2);
     },
 
-    // Complete reassign controller data
+    // Completely reassign controller data
     setControllerData(state, data) {
       Object.assign(state, data);
-      // Object.assign(state, JSON.parse(JSON.stringify(data)));
     },
 
     // Basic controller settings

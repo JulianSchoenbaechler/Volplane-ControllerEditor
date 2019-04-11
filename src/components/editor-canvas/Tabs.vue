@@ -6,7 +6,7 @@
       <popup v-if="removePopup" title="Delete View" @submit="remove">
         <p>
           Are you sure you want to remove the view <em>{{ tempView }}</em> with all its contents
-          from the controller? This action cannot be undone.
+          from the controller?
         </p>
         <div class="split right">
           <input type="button" value="No" @click="removePopup = false" />
@@ -380,7 +380,7 @@ export default {
       // Save this action
       this.$store.dispatch('history/register', {
         type: 'removeView',
-        activeView: this.activeView,
+        activeView: this.tempView,
       });
 
       this.$store.commit('controller/removeView', this.tempView);
