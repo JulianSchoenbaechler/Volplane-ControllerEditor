@@ -15,6 +15,13 @@ export default {
   // Controller getters
   getters: {
 
+    // Expose the whole controller data
+    controllerData(state) {
+      // Deep copy....
+      // Keep attention to the memory consumption -> then again it's web-design (T.T)
+      return JSON.parse(JSON.stringify(state));
+    },
+
     // The name of the loaded controller
     name(state) {
       return state.name || 'noname';
@@ -24,14 +31,33 @@ export default {
     views(state) {
       return state.views || [];
     },
+
+    // Default view
+    defaultView(state) {
+      let def = 'noname';
+
+      state.views.forEach((v) => {
+        if (v.default) {
+          def = v.name;
+        }
+      });
+
+      return def;
+    },
   },
 
   // Controller state mutations
   mutations: {
 
+    // Generate an easy-to-read string of the controller data
+    exportControllerData(state) {
+      return JSON.stringify(state, null, 2);
+    },
+
     // Complete reassign controller data
     setControllerData(state, data) {
       Object.assign(state, data);
+      // Object.assign(state, JSON.parse(JSON.stringify(data)));
     },
 
     // Basic controller settings

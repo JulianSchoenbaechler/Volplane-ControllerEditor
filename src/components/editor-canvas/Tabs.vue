@@ -338,6 +338,12 @@ export default {
     makeDefault(name = null, event = null) {
       if (event) event.stopPropagation();
 
+      // Save this action
+      this.$store.dispatch('history/register', {
+        type: 'makeDefaultView',
+        activeView: this.$store.getters['controller/defaultView'],
+      });
+
       this.$store.commit('controller/makeDefaultView', name);
     },
 
@@ -355,6 +361,12 @@ export default {
         return;
       }
 
+      // Save this action
+      this.$store.dispatch('history/register', {
+        type: 'addView',
+        activeView: this.activeView,
+      });
+
       // Adding new view
       this.$store.commit('controller/addView', this.tempView);
       this.$store.commit('editor/setActiveView', this.tempView);
@@ -365,6 +377,12 @@ export default {
 
     // Remove view with name
     remove() {
+      // Save this action
+      this.$store.dispatch('history/register', {
+        type: 'removeView',
+        activeView: this.activeView,
+      });
+
       this.$store.commit('controller/removeView', this.tempView);
 
       // Removed the active view?

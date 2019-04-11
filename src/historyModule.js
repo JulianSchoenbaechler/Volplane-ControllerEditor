@@ -4,7 +4,7 @@ export default {
   // History state
   state: {
     maxSteps: 20,
-    currentPosition: -1,
+    currentPosition: 0,
     history: [],
   },
 
@@ -21,11 +21,6 @@ export default {
       return state.currentPosition;
     },
 
-    // The element the pointer is currently on
-    currentElement(state) {
-      return state.history[state.currentPosition] || null;
-    },
-
   },
 
   // History state mutations
@@ -38,20 +33,18 @@ export default {
 
     // Sets the current position of the history pointer
     setCurrentPosition(state, position) {
-      if ((position >= 0) && (position < state.maxSteps) && (position < state.history.length)) {
+      if ((position >= 0) && (position < state.maxSteps) && (position <= state.history.length)) {
         state.currentPosition = position;
-      } else {
-        state.currentPosition = -1;
       }
     },
 
     // Remove all subsequent history items from the current position
     removeSubsequent(state) {
-      const next = state.currentPosition + 1;
+      const current = state.currentPosition;
       const { length } = state.history;
 
-      if (next < length) {
-        state.history.splice(next, length - next);
+      if (current < length) {
+        state.history.splice(current, length - current);
       }
     },
 
@@ -69,7 +62,7 @@ export default {
 
     // Clear the currently stored history
     clearHistory(state) {
-      state.currentPosition = -1;
+      state.currentPosition = 0;
       state.history = [];
     },
 
@@ -79,54 +72,53 @@ export default {
   actions: {
 
     // Register new history dataat the current position
-    register({ commit, state }, { type, activeView, data }) {
-      if (!type || !activeView || !data) { return; }
+    register({ commit, state, rootGetters }, { type, activeView }) {
+      if (!type || !activeView) { return; }
 
       commit('removeSubsequent');
-      commit('addToHistory', { type, activeView, data });
-      commit('setCurrentPosition', state.history.length - 1);
+      commit('addToHistory', { type, activeView, data: rootGetters['controller/controllerData'] });
+      commit('setCurrentPosition', Math.min(state.currentPosition + 1, state.maxSteps - 1));
     },
 
     // Undo from history
-    undo({ commit, state }) {
-      if (state.currentPosition < 0) { return; }
+    undo({
+      commit,
+      dispatch,
+      rootGetters,
+      state,
+    }) {
+      const isFirst = state.history.length === state.currentPosition;
+      const previous = state.currentPosition - 1;
 
-      const element = state.history[state.currentPosition];
+      if ((previous < 0) || (previous >= state.history.length)) { return; }
 
-      // Resolve element data
-      switch (element.type) {
-        case 'test':
-          console.log('undo...');
-          break;
+      const element = state.history[previous];
 
-        default:
-          return;
+      // Set current working state
+      if (isFirst) {
+        dispatch('register', { type: 'temp', activeView: rootGetters['editor/activeView'] });
       }
+
+      // Set controller data
+      commit('controller/setControllerData', element.data, { root: true });
+      // console.log(element.type);
 
       // Change to the active view and set history position
       commit('editor/setActiveView', element.activeView, { root: true });
-      commit('setCurrentPosition', state.currentPosition - 1);
+      commit('setCurrentPosition', previous);
     },
 
     // Redo from history
     redo({ commit, state }) {
       const next = state.currentPosition + 1;
 
-      if ((next < 0) || (next >= state.history.length)) {
-        return;
-      }
+      if ((next < 0) || (next >= state.history.length)) { return; }
 
       const element = state.history[next];
 
-      // Resolve element data
-      switch (element.type) {
-        case 'test':
-          console.log('redo...');
-          break;
-
-        default:
-          return;
-      }
+      // Set controller data
+      commit('controller/setControllerData', element.data, { root: true });
+      // console.log(element.type);
 
       // Change to the active view and set history position
       commit('editor/setActiveView', element.activeView, { root: true });
