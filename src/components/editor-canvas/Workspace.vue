@@ -12,6 +12,12 @@
       class="virtual-console"
       :style="consoleStyle"
     >
+    <!-- grid -->
+    <table class="grid" v-show="snapToGrid">
+      <tr v-for="y in gridSplitY" :key="`grid-y-${y}`">
+        <td v-for="x in gridSplitX" :key="`grid-x-${x}`"></td>
+      </tr>
+    </table>
     <!-- demo rectangle -->
       <drag-resize
         :parentLimitation="true"
@@ -20,13 +26,36 @@
         :preventActiveBehavior="mode === 'move'"
         :isDraggable="mode === 'edit'"
         :isResizable="mode === 'edit'"
-        :snapToGrid="true"
-        :gridX="10"
-        :gridY="10"
+        :snapToGrid="snapToGrid"
+        :gridX="100 / gridSplitX"
+        :gridY="100 / gridSplitY"
       >
       </drag-resize>
     </div>
-    <div id="ce-canvas-controls">
+    <div class="ce-canvas-controls left">
+      <v-checkbox
+        v-model="snapToGrid"
+        :value="'Grid'"
+        :style="'display: inline-block;'"
+      />
+      <span class="inline-label">&nbsp;X:</span>
+      <input
+        type="number"
+        style="width: 40px;"
+        :value="gridSplitX"
+        @focus="$event.currentTarget.select()"
+        @change="handleGridControl($event, true)"
+      />
+      <span class="inline-label">&nbsp;Y:</span>
+      <input
+        type="number"
+        style="width: 40px;"
+        :value="gridSplitY"
+        @focus="$event.currentTarget.select()"
+        @change="handleGridControl($event, false)"
+      />
+    </div>
+    <div class="ce-canvas-controls right">
       <span class="inline-control float-left" @click="zoomOut">
         <font-awesome-icon icon="search-minus" />
       </span>
@@ -74,6 +103,9 @@ export default {
       },
       scrollable: false,
       mode: 'edit',
+      snapToGrid: false,
+      gridSplitX: 10,
+      gridSplitY: 10,
     };
   },
 
@@ -135,6 +167,30 @@ export default {
         this.$store.commit('editor/setZoomLevel', level / 100);
         val = (this.zoomLevel * 100).toFixed(0);
         el.value = `${val}%`;
+      }
+    },
+
+    // Handle workspace grid control input
+    handleGridControl(e = null, horizontal = true) {
+      if (e === null) return;
+
+      const el = e.currentTarget;
+      let val = Number(el.value.replace(/[^0-9.]/g, '')) || 10;
+
+      if (val < 1) {
+        val = 1;
+      } else if (val > 100) {
+        val = 100;
+      }
+
+      el.blur();
+      el.value = val;
+
+      // Change horizontal or vertical cell count?
+      if (horizontal) {
+        this.gridSplitX = val;
+      } else {
+        this.gridSplitY = val;
       }
     },
 
@@ -263,28 +319,35 @@ export default {
 #ce-canvas-workspace.mode-move {
   cursor: move;
 }
-#ce-canvas-controls {
+#ce-canvas-workspace .ce-canvas-controls {
   display: block;
   position: fixed;
-  width: 120px;
+  width: auto;
   height: auto;
   bottom: 20px;
-  right: 0;
   padding: 6px 10px;
   text-align: center;
   background-color: rgba(34, 33, 37, 0.7);
-  border-left: 2px solid #414044;
   z-index: 999;
 }
-#ce-canvas-controls input {
+#ce-canvas-workspace .ce-canvas-controls.left {
+  left: calc(48px + 40%); /* This simulates 'sticky' and maybe must be changed in the future... */
+  border-right: 2px solid #414044;
+}
+#ce-canvas-workspace .ce-canvas-controls.right {
+  right: 0;
+  border-left: 2px solid #414044;
+}
+#ce-canvas-workspace .ce-canvas-controls input[type="text"],
+#ce-canvas-workspace .ce-canvas-controls input[type="number"] {
   display: inline-block;
   position: relative;
   width: auto;
   max-width: 60px;
-  margin: 0 4px;
+  margin: 0 10px;
   text-align: center;
 }
-#ce-canvas-controls .inline-control {
+#ce-canvas-workspace .ce-canvas-controls .inline-control {
   display: block;
   position: relative;
   width: auto;
@@ -294,6 +357,16 @@ export default {
   color: #f8f8ec;
   text-align: center;
   cursor: pointer;
+}
+#ce-canvas-workspace .ce-canvas-controls .inline-label {
+  display: inline-block;
+  position: relative;
+  width: auto;
+  height: calc(100% - 12px);
+  margin: 2px 0 0;
+  padding: 0;
+  color: #f8f8ec;
+  text-align: center;
 }
 .virtual-console {
   display: block;
@@ -309,20 +382,20 @@ export default {
   background-size: cover;
   background-position: center;
 }
-.virtual-console.landscape {
-  min-width: 640px;
-  min-height: 360px;
-  width: 640px;
-  height: 360px;
-  max-width: 640px;
-  max-height: 360px;
+.virtual-console > table.grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
 }
-.virtual-console.portrait {
-  min-width: 360px;
-  min-height: 640px;
-  width: 360px;
-  height: 640px;
-  max-width: 360px;
-  max-height: 640px;
+.virtual-console > table.grid,
+.virtual-console > table.grid, tr,
+.virtual-console > table.grid, td {
+    border: 1px solid #7a2f34;
+    border-collapse: collapse;
 }
 </style>

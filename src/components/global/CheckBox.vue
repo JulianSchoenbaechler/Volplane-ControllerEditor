@@ -47,7 +47,7 @@ label {
   margin: 4px 10px;
   padding: 0;
   font-family: "Montserrat";
-  font-weight: 200;
+  font-weight: 300;
   font-style: normal;
   font-size: 14px;
   color: #f8f8ec;
