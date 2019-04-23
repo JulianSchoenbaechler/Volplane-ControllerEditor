@@ -6,7 +6,6 @@
     :class="mode === 'edit' ? 'mode-edit' : 'mode-move'"
     @wheel.prevent="handleMouseWheel($event)"
     @mousewheel.prevent="handleMouseWheel($event, true)"
-
   >
     <div
       class="virtual-console"

@@ -54,6 +54,7 @@ export default {
       open: false,
       localValue: '',
       freshOpened: true,
+      selfClick: false,
     };
   },
 
@@ -80,17 +81,21 @@ export default {
 
     // An array representing the list items from the options
     computedOptions() {
-      if (this.isSingle) return this.options;
-
       let list = [];
 
-      this.options.forEach((n) => {
-        list = [...list, { class: 'category', value: n.value }];
-        list = [
-          ...list,
-          ...n.options.map(val => ({ class: 'item', value: val })),
-        ];
-      });
+      if (this.isSingle) {
+        this.options.forEach((n) => {
+          list = [...list, { class: 'item', value: n }];
+        });
+      } else {
+        this.options.forEach((n) => {
+          list = [...list, { class: 'category', value: n.value }];
+          list = [
+            ...list,
+            ...n.options.map(val => ({ class: 'item', value: val })),
+          ];
+        });
+      }
 
       return list;
     },
@@ -150,12 +155,20 @@ export default {
         this.open = true;
       }
 
-      if (e !== null) e.stopPropagation();
+      if (e !== null) {
+        e.stopPropagation();
+
+        if (this.open) {
+          this.selfClick = true;
+          window.dispatchEvent(new Event('click'));
+          this.selfClick = false;
+        }
+      }
     },
 
     // Window click event handler
     windowClick() {
-      this.toggle(false);
+      if (!this.selfClick) { this.toggle(false); }
     },
   },
 
@@ -168,7 +181,7 @@ export default {
 
   beforeDestroy() {
     // Unsubscribe event listener(s)
-    window.removeEventListener('resize', this.windowClick);
+    window.removeEventListener('click', this.windowClick);
   },
 };
 </script>
@@ -177,9 +190,9 @@ export default {
 .select {
   display: inline-block;
   position: relative;
-  width: auto;
+  width: 200px;
   height: 20px;
-  max-width: none;
+  max-width: calc(100% - 20px);
   max-height: 20px;
   margin: 0 10px;
   padding: 0;
@@ -192,6 +205,7 @@ export default {
 }
 .select input {
   position: relative;
+  max-width: 100%;
   margin: 0;
   padding: 0 14px 0 4px;
   cursor: pointer;
@@ -210,7 +224,7 @@ export default {
   max-height: 600px;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: hidden auto;
   list-style: none;
   cursor: pointer;
   background-color: #313133;

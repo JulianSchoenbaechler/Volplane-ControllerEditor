@@ -552,6 +552,49 @@ main {
   background-position: left top;
   background-repeat: repeat;
 }
+#ce-props .property {
+  display: flex;
+  position: relative;
+  flex-flow: row nowrap;
+  margin: 4px 0;
+  overflow: visible;
+}
+#ce-props .property>div {
+  flex: 0 1 100%;
+  max-width: 50%;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+#ce-props h2 {
+  margin: 0 10px;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: auto;
+}
+#ce-props p {
+  margin: 0 10px;
+  padding: 0 0 4px;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: left;
+  line-height: auto;
+}
+#ce-props label {
+  margin: 0 10px;
+  padding: 0;
+  width: calc(100% - 20px);
+  height: auto;
+  font-size: 14px;
+  font-weight: 200;
+  text-align: left;
+  line-height: auto;
+  word-wrap: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
 /* EDITOR CANVAS */
 #ce-canvas {
