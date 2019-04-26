@@ -15,16 +15,16 @@
     "@fortawesome/free-regular-svg-icons": "^5.8.1",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
-    "@simonwep/pickr": "^0.4.5",
+    "@simonwep/pickr": "^0.4.11",
     "volplane-drag-resize": "^1.0.4",
     "vue": "^2.6.10",
     "vue-dragscroll": "^1.8.3",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.5",
-    "@vue/cli-plugin-eslint": "^3.5.1",
-    "@vue/cli-service": "^3.5.3",
+    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-plugin-eslint": "^3.6.0",
+    "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-airbnb": "^3.0.5",
     "vue-template-compiler": "^2.6.10"
   }
