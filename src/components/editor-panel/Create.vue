@@ -11,13 +11,10 @@
 
     <div class="property">
       <div>
-        <label for="xyz">testlabel testlabeltestlabeltestlabel testlabel</label>
+        <input type="button" value="Test" />
       </div>
       <div>
-        <v-select
-          :value="'Test 1'"
-          :options="[{ value: 'Gaga', options: ['Test 1', 'Test 2'] }]"
-        />
+
       </div>
     </div>
     <div class="property">

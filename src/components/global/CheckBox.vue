@@ -44,7 +44,7 @@ label {
   height: 20px;
   max-width: none;
   max-height: 20px;
-  margin: 4px 10px;
+  margin: 0 10px;
   padding: 0;
   font-family: "Montserrat";
   font-weight: 300;
