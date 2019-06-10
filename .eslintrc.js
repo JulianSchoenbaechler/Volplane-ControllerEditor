@@ -6,8 +6,8 @@ module.exports = {
     jquery: true
   },
   globals: {
-    "$": true,
-    "jQuery": true
+    '$': true,
+    'jQuery': true
   },
   extends: [
     'plugin:vue/essential',
@@ -16,7 +16,8 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-param-reassign': [2, { props: false }]
+    'no-param-reassign': [2, { props: false }],
+    'object-curly-newline': ['error', { 'consistent': true }]
   },
   parserOptions: {
     parser: 'babel-eslint'

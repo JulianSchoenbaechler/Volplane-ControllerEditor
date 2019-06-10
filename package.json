@@ -16,7 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "@simonwep/pickr": "^0.4.11",
-    "volplane-drag-resize": "^1.0.4",
+    "volplane-drag-resize": "^1.0.5",
     "vue": "^2.6.10",
     "vue-dragscroll": "^1.8.3",
     "vuex": "^3.1.0"

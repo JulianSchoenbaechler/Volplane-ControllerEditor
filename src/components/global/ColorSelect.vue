@@ -20,9 +20,7 @@ export default {
     event: 'change',
   },
 
-  props: {
-    value: String,
-  },
+  props: { value: String },
 
   computed: {
     // The component event listeners

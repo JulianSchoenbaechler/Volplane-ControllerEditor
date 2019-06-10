@@ -25,14 +25,18 @@
           "height": 40,
           "x": 0,
           "y": 20,
-          "image": "img/button-big.png",
           "hidden": false,
-          "text": "&lt;",
-          "font": "",
-          "fontSize": 30,
-          "fontColor": "rgb(248, 248, 236)",
-          "highlightImage": "img/button-big-highlight.png",
-          "layer": 2
+          "layer": 2,
+          "presets": {
+            "standard": {
+              "image": "img/button-big.png",
+              "text": "&lt;",
+              "font": "",
+              "fontSize": 30,
+              "fontColor": "rgb(248, 248, 236)",
+              "highlightImage": "img/button-big-highlight.png"
+            }
+          }
         },
         {
           "type": "button",
@@ -41,14 +45,18 @@
           "height": 40,
           "x": 80,
           "y": 20,
-          "image": "img/button-big.png",
           "hidden": false,
-          "text": "&gt;",
-          "font": "",
-          "fontSize": 30,
-          "fontColor": "rgb(248, 248, 236)",
-          "highlightImage": "img/button-big-highlight.png",
-          "layer": 2
+          "layer": 2,
+          "presets": {
+            "standard": {
+              "image": "img/button-big.png",
+              "text": "&gt;",
+              "font": "",
+              "fontSize": 30,
+              "fontColor": "rgb(248, 248, 236)",
+              "highlightImage": "img/button-big-highlight.png"
+            }
+          }
         },
         {
           "type": "text",
@@ -57,15 +65,19 @@
           "height": 20,
           "x": 20,
           "y": 30,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "Red",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 24,
-          "paddingVertical": 32,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "Red",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 24,
+              "paddingVertical": 32,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         },
         {
           "type": "button",
@@ -74,13 +86,17 @@
           "height": 25,
           "x": 0,
           "y": 70,
-          "image": "img/button.png",
           "hidden": false,
-          "text": "Ready",
-          "font": "",
-          "fontSize": 30,
-          "fontColor": "rgb(248, 248, 236)",
-          "highlightImage": "img/button-highlight.png"
+          "presets": {
+            "standard": {
+              "image": "img/button.png",
+              "text": "Ready",
+              "font": "",
+              "fontSize": 30,
+              "fontColor": "rgb(248, 248, 236)",
+              "highlightImage": "img/button-highlight.png"
+            }
+          }
         },
         {
           "type": "text",
@@ -89,15 +105,19 @@
           "height": 20,
           "x": 0,
           "y": 5,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "Choose your color!",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 24,
-          "paddingVertical": 2,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "Choose your color!",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 24,
+              "paddingVertical": 2,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         }
       ]
     },
@@ -114,15 +134,19 @@
           "height": 20,
           "x": 0,
           "y": 20,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "Game is full!",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 24,
-          "paddingVertical": 2,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "Game is full!",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 24,
+              "paddingVertical": 2,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         },
         {
           "type": "text",
@@ -131,15 +155,19 @@
           "height": 20,
           "x": 0,
           "y": 45,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "You may join when someone leaves...",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 18,
-          "paddingVertical": 2,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "You may join when someone leaves...",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 18,
+              "paddingVertical": 2,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         }
       ]
     },
@@ -156,15 +184,19 @@
           "height": 20,
           "x": 0,
           "y": 30,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "Please wait...",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 24,
-          "paddingVertical": 32,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "Please wait...",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 24,
+              "paddingVertical": 32,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         }
       ]
     },
@@ -181,15 +213,19 @@
           "height": 20,
           "x": 0,
           "y": 15,
-          "image": "img/transparent.png",
           "hidden": false,
-          "text": "Game started!",
-          "textAlign": "center",
-          "font": "",
-          "fontSize": 24,
-          "paddingVertical": 2,
-          "paddingHorizontal": 2,
-          "fontColor": "rgb(248, 248, 236)"
+          "presets": {
+            "standard": {
+              "image": "img/transparent.png",
+              "text": "Game started!",
+              "textAlign": "center",
+              "font": "",
+              "fontSize": 24,
+              "paddingVertical": 2,
+              "paddingHorizontal": 2,
+              "fontColor": "rgb(248, 248, 236)"
+            }
+          }
         },
         {
           "type": "joystick",
@@ -198,14 +234,18 @@
           "height": 50,
           "x": 0,
           "y": 40,
-          "image": "img/joystick.png",
           "hidden": false,
-          "relative": false,
-          "distance": 10,
-          "stickImage": "img/joystick-stick.png",
-          "thumbImage": "img/joystick-relative-thumb.png",
-          "stickSize": 50,
-          "thumbSize": 20
+          "presets": {
+            "standard": {
+              "image": "img/joystick.png",
+              "relative": false,
+              "distance": 10,
+              "stickImage": "img/joystick-stick.png",
+              "thumbImage": "img/joystick-relative-thumb.png",
+              "stickSize": 50,
+              "thumbSize": 20
+            }
+          }
         }
       ]
     }

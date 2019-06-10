@@ -61,9 +61,11 @@ export default {
     },
 
     // Basic controller settings
-    setControllerSettings(state, data) {
-      const { synchronizeTime = true, deviceMotion = false, sensitivity = 5 } = data;
-
+    setControllerSettings(state, {
+      synchronizeTime = true,
+      deviceMotion = false,
+      sensitivity = 5,
+    }) {
       state.synchronizeTime = synchronizeTime;
       state.deviceMotion = deviceMotion;
       state.sensitivity = sensitivity;
@@ -111,17 +113,17 @@ export default {
 
     // Add a new element to a specified view
     // Provide a name identifier and a type
-    addElement(state, data = {}) {
-      if (!data.view || !data.name || !data.type) return;
+    addElement(state, { view, name, type }) {
+      if (!view || !name || !type) return;
 
-      const i = state.views.findIndex(v => v.name === data.view);
+      const i = state.views.findIndex(v => v.name === view);
 
       if (i < 0) return;
 
       // Create element data
       let element = {
-        type: data.type,
-        name: data.name,
+        type,
+        name,
         width: 40,
         height: 40,
         x: 0,
@@ -130,8 +132,7 @@ export default {
         layer: 0,
       };
 
-      const basicElement = {
-        ...element,
+      const basicPreset = {
         image: '',
         imagePosition: 'contain',
         font: '',
@@ -143,93 +144,129 @@ export default {
       };
 
       // Differentiate between element types
-      switch (data.type) {
+      switch (type) {
         case 'text':
           element = {
-            ...basicElement,
-            text: 'Text',
-            textAlignH: 'left',
-            textAlignV: 'top',
+            ...element,
+            presets: {
+              standard: {
+                ...basicPreset,
+                text: 'Text',
+                textAlignH: 'left',
+                textAlignV: 'top',
+              },
+            },
           };
           break;
 
         case 'button':
           element = {
-            ...basicElement,
-            highlightImage: '',
-            text: 'Button',
-            textAlignH: 'center',
-            textAlignV: 'middle',
+            ...element,
+            presets: {
+              standard: {
+                ...basicPreset,
+                highlightImage: '',
+                text: 'Button',
+                textAlignH: 'center',
+                textAlignV: 'middle',
+              },
+            },
           };
           break;
 
         case 'swipe':
           element = {
-            ...basicElement,
-            highlightImage: '',
-            text: 'Swipe Field',
-            textAlignH: 'center',
-            textAlignV: 'middle',
+            ...element,
+            presets: {
+              standard: {
+                ...basicPreset,
+                highlightImage: '',
+                text: 'Swipe Field',
+                textAlignH: 'center',
+                textAlignV: 'middle',
+              },
+            },
           };
           break;
 
         case 'touch':
           element = {
-            ...basicElement,
-            highlightImage: '',
-            text: 'Touch Field',
-            textAlignH: 'center',
-            textAlignV: 'middle',
+            ...element,
+            presets: {
+              standard: {
+                ...basicPreset,
+                highlightImage: '',
+                text: 'Touch Field',
+                textAlignH: 'center',
+                textAlignV: 'middle',
+              },
+            },
           };
           break;
 
         case 'dpad':
           element = {
             ...element,
-            image: '',
-            highlightImageU: '',
-            highlightImageD: '',
-            highlightImageL: '',
-            highlightImageR: '',
-            is8Way: false,
-            imagePosition: 'contain',
+            presets: {
+              standard: {
+                image: '',
+                highlightImageU: '',
+                highlightImageD: '',
+                highlightImageL: '',
+                highlightImageR: '',
+                is8Way: false,
+                imagePosition: 'contain',
+              },
+            },
           };
           break;
 
         case 'rdpad':
           element = {
             ...element,
-            image: '',
-            handlerImage: '',
-            highlightImageU: '',
-            highlightImageD: '',
-            highlightImageL: '',
-            highlightImageR: '',
-            imagePosition: 'contain',
-            is8Way: false,
-            distance: 10,
+            presets: {
+              standard: {
+                image: '',
+                handlerImage: '',
+                highlightImageU: '',
+                highlightImageD: '',
+                highlightImageL: '',
+                highlightImageR: '',
+                imagePosition: 'contain',
+                is8Way: false,
+                distance: 10,
+              },
+            },
           };
           break;
 
         case 'joystick':
           element = {
             ...element,
-            image: '',
-            stickImage: '',
-            imagePosition: 'contain',
-            distance: 10,
+            presets: {
+              standard: {
+                image: '',
+                stickImage: '',
+                imagePosition: 'contain',
+                distance: 10,
+              },
+            },
           };
           break;
 
         case 'rjoystick':
           element = {
             ...element,
-            image: '',
-            stickImage: '',
-            thumbImage: '',
-            imagePosition: 'contain',
-            stickSize: 0.8,
-            thumbSize: 0.4,
+            presets: {
+              standard: {
+                image: '',
+                stickImage: '',
+                thumbImage: '',
+                imagePosition: 'contain',
+                stickSize: 0.8,
+                thumbSize: 0.4,
+              },
+            },
           };
           break;
 
@@ -242,7 +279,7 @@ export default {
 
     // Remove an element from a specified view
     // Provide a name identifier
-    removeElement(state, view = null, name = null) {
+    removeElement(state, { name, view }) {
       if (!view || !name) return;
 
       const i = state.views.findIndex(v => v.name === view);
@@ -254,6 +291,85 @@ export default {
       if (j < 0) return;
 
       state.views[i].content.splice(j, 1);
+    },
+
+    // Change an elements properties on a specified view
+    // Provide a name identifier
+    changeElementProperties(state, { view, name, ...data }) {
+      if (!view || !name) return;
+
+      const i = state.views.findIndex(v => v.name === view);
+
+      if (i < 0) return;
+
+      const j = state.views[i].content.findIndex(e => e.name === name);
+
+      if (j < 0) return;
+
+      const objRef = state.views[i].content[j];
+
+      // Adapt valid props
+      objRef.x = data.x || objRef.x;
+      objRef.y = data.y || objRef.y;
+      objRef.width = data.width || objRef.width;
+      objRef.height = data.height || objRef.height;
+      objRef.hidden = data.hidden || objRef.hidden;
+      objRef.layer = data.layer || objRef.layer;
+    },
+
+    // Add a preset to an element on a specified view
+    // Provide a name identifier and the preset name
+    addElementPreset(state, { view, name, preset }) {
+      if (!view || !name || !preset) return;
+
+      const i = state.views.findIndex(v => v.name === view);
+
+      if (i < 0) return;
+
+      const j = state.views[i].content.findIndex(e => e.name === name);
+
+      if (j < 0) return;
+
+      // Add new preset
+      state.views[i].content[j].presets[preset] = {};
+    },
+
+    // Remove a preset from an element on a specified view
+    // Provide a name identifier and the preset name
+    removeElementPreset(state, { view, name, preset }) {
+      if (!view || !name || !preset) return;
+
+      const i = state.views.findIndex(v => v.name === view);
+
+      if (i < 0) return;
+
+      const j = state.views[i].content.findIndex(e => e.name === name);
+
+      if (j < 0) return;
+
+      // Remove specified preset
+      delete state.views[i].content[j].presets[preset];
+    },
+
+    // Change an elements preset properties on a specified view
+    // Provide a name identifier and the preset name
+    changeElementPreset(state, { view, name, preset, ...props }) {
+      if (!view || !name || !preset) return;
+
+      const i = state.views.findIndex(v => v.name === view);
+
+      if (i < 0) return;
+
+      const j = state.views[i].content.findIndex(e => e.name === name);
+
+      if (j < 0) return;
+
+      const presetsRef = state.views[i].content[j].presets;
+
+      // Adapt valid props
+      if (presetsRef[preset]) {
+        presetsRef[preset] = { ...presetsRef[preset], ...props };
+      }
     },
   },
 };

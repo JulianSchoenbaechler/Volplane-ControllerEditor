@@ -11,14 +11,39 @@
       class="virtual-console"
       :style="consoleStyle"
     >
-    <!-- grid -->
-    <table class="grid" v-show="snapToGrid">
-      <tr v-for="y in gridSplitY" :key="`grid-y-${y}`">
-        <td v-for="x in gridSplitX" :key="`grid-x-${x}`"></td>
-      </tr>
-    </table>
-    <!-- demo rectangle -->
-      <drag-resize
+      <!-- grid -->
+      <table class="grid" v-show="snapToGrid">
+        <tr v-for="y in gridSplitY" :key="`grid-y-${y}`">
+          <td v-for="x in gridSplitX" :key="`grid-x-${x}`"></td>
+        </tr>
+      </table>
+
+      <!-- iterate view elements -->
+      <view-element
+        v-for="el in view.content"
+        v-bind:key="el.name"
+        :name="el.name"
+        :view="activeView"
+        :parentPixelW="parseInt(consoleStyle.width.slice(0, -2))"
+        :parentPixelH="parseInt(consoleStyle.height.slice(0, -2))"
+        :preventActiveBehavior="mode === 'move'"
+        :isDraggable="mode === 'edit'"
+        :isResizable="mode === 'edit'"
+        :snapToGrid="snapToGrid"
+        :gridX="100 / gridSplitX"
+        :gridY="100 / gridSplitY"
+        :w="el.width"
+        :h="el.height"
+        :x="el.x"
+        :y="el.y"
+        :z="el.layer"
+        :zoomLevel="zoomLevel"
+      >
+        {{el.name}}
+      </view-element>
+
+      <!-- demo rectangle -->
+      <!-- <drag-resize
         :parentLimitation="true"
         :parentPixelW="parseInt(consoleStyle.width.slice(0, -2))"
         :parentPixelH="parseInt(consoleStyle.height.slice(0, -2))"
@@ -29,8 +54,10 @@
         :gridX="100 / gridSplitX"
         :gridY="100 / gridSplitY"
       >
-      </drag-resize>
+      </drag-resize> -->
     </div>
+
+    <!-- canvas left controls -->
     <div class="ce-canvas-controls left">
       <v-checkbox
         v-model="snapToGrid"
@@ -54,6 +81,8 @@
         @change="handleGridControl($event, false)"
       />
     </div>
+
+    <!-- canvas right controls -->
     <div class="ce-canvas-controls right">
       <span class="inline-control float-left" @click="zoomOut">
         <font-awesome-icon icon="search-minus" />
@@ -74,19 +103,14 @@
 
 <script>
 import { dragscroll } from 'vue-dragscroll';
-import 'volplane-drag-resize/lib/volplane-drag-resize.css';
-import VolplaneDragResize from 'volplane-drag-resize';
+import Element from './workspace/Element.vue';
 
 export default {
   name: 'editor-canvas-workspace',
 
-  directives: {
-    dragscroll,
-  },
+  directives: { dragscroll },
 
-  components: {
-    dragResize: VolplaneDragResize,
-  },
+  components: { viewElement: Element },
 
   data() {
     return {
