@@ -70,8 +70,7 @@ export default {
     isSingle() {
       if (this.options && this.options.length > 0) {
         if (
-          typeof this.options[0] === 'string' ||
-          this.options[0] instanceof String
+          typeof (this.options[0] === 'string') || (this.options[0] instanceof String)
         ) {
           return true;
         }

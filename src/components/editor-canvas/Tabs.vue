@@ -216,8 +216,7 @@ export default {
         let tabCount = this.visibility.filter(v => v.value === true).length;
         const maxTabs = this.visibility.length;
         const bottomLimit = minWidth(tabCount);
-        const upperLimit =
-          tabCount < maxTabs ? minWidth(tabCount + 1) : list.clientWidth;
+        const upperLimit = tabCount < maxTabs ? minWidth(tabCount + 1) : list.clientWidth;
 
         // Add or remove as necessary
         if (tabCount === maxTabs) {

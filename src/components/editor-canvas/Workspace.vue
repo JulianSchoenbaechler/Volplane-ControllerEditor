@@ -270,15 +270,12 @@ export default {
 
       // Scroll to position after applying changes
       this.$nextTick(() => {
-        if (
-          $ws.scrollWidth - $ws.clientWidth > 0 ||
-          $ws.scrollHeight - $ws.clientHeight > 0
-        ) {
+        if (($ws.scrollWidth - $ws.clientWidth > 0) || ($ws.scrollHeight - $ws.clientHeight > 0)) {
           $ws.scrollTo(
-            ($ws.scrollWidth - $ws.clientWidth) *
-              (Number.isNaN(scrollRatio.x) ? 0.5 : scrollRatio.x),
-            ($ws.scrollHeight - $ws.clientHeight) *
-              (Number.isNaN(scrollRatio.y) ? 0.5 : scrollRatio.y),
+            ($ws.scrollWidth - $ws.clientWidth)
+              * (Number.isNaN(scrollRatio.x) ? 0.5 : scrollRatio.x),
+            ($ws.scrollHeight - $ws.clientHeight)
+              * (Number.isNaN(scrollRatio.y) ? 0.5 : scrollRatio.y),
           );
           this.scrollable = true;
         } else {
