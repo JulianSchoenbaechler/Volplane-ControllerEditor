@@ -1,31 +1,33 @@
 {
   "name": "volplane-ce",
   "version": "0.1.0",
+  "private": true,
   "description": "A powerful and feature-rich controller editor for Volplane.",
   "author": "Julian Schönbächler <info@julian-s.ch>",
-  "license": "GPL-3.0-or-later",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.17",
-    "@fortawesome/free-regular-svg-icons": "^5.8.1",
-    "@fortawesome/free-solid-svg-icons": "^5.8.1",
-    "@fortawesome/vue-fontawesome": "^0.1.6",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-regular-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
     "@simonwep/pickr": "^0.4.11",
-    "volplane-drag-resize": "^1.0.5",
-    "vue": "^2.6.10",
-    "vue-dragscroll": "^1.8.3",
-    "vuex": "^3.1.0"
+    "core-js": "^3.6.1",
+    "volplane-drag-resize": "^1.0.7",
+    "vue": "^2.6.11",
+    "vue-dragscroll": "^1.10.2",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.6.0",
-    "@vue/cli-plugin-eslint": "^3.6.0",
-    "@vue/cli-service": "^3.6.0",
+    "@vue/cli-plugin-babel": "^4.1.1",
+    "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-service": "^4.1.1",
     "@vue/eslint-config-airbnb": "^3.0.5",
-    "vue-template-compiler": "^2.6.10"
-  }
+    "eslint": "^4.19.1",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "license": "GPL-3.0-or-later"
 }
