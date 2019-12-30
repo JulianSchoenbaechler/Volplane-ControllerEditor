@@ -99,6 +99,8 @@ export default {
   display: block;
   width: auto;
   height: auto;
+  top: 0;
+  left: 0;
   margin: 0 10px 20px;
   text-align: justify;
   font-size: 14px;

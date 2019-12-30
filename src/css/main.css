@@ -311,8 +311,8 @@ textarea {
  * License      GPL v3
  */
 
- /* FULL SCREEN */
- .full-screen {
+/* FULL SCREEN */
+.full-screen {
   position: fixed;
   top: 0;
   left: 0;

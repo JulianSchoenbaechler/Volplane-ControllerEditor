@@ -118,7 +118,6 @@ export default {
 
       // Set controller data
       commit('controller/setControllerData', element.data, { root: true });
-      // console.log(element.type);
 
       // Change to the active view and set history position
       commit('editor/setActiveView', element.activeView, { root: true });

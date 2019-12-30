@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <loading-panel v-show="loadingPanel" />
+    <popup-panel />
     <title-bar />
 
     <main>
@@ -14,6 +15,7 @@
 
 <script>
 import LoadingPanel from './components/LoadingPanel.vue';
+import PopupPanel from './components/PopupPanel.vue';
 import TitleBar from './components/TitleBar.vue';
 import EditorToolbox from './components/EditorToolbox.vue';
 import EditorPanel from './components/EditorPanel.vue';
@@ -24,6 +26,7 @@ export default {
   name: 'app',
   components: {
     'loading-panel': LoadingPanel,
+    'popup-panel': PopupPanel,
     'title-bar': TitleBar,
     'editor-toolbox': EditorToolbox,
     'editor-panel': EditorPanel,

@@ -54,7 +54,6 @@ export default new Vuex.Store({
 
         // Editor
         context.commit('editor/setActiveView', context.getters['controller/views'][0].name);
-
         context.commit('setLoadingPanel', false);
       } catch (e) {
         console.error(e);
