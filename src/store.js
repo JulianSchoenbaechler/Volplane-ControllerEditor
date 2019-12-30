@@ -4,6 +4,7 @@ import loadData from './utils/dataLoader';
 import sanitizeName from './utils/stringSanitizer';
 
 // Store modules
+import popupModule from './popupModule';
 import controllerModule from './controllerModule';
 import editorModule from './editorModule';
 import historyModule from './historyModule';
@@ -66,6 +67,9 @@ export default new Vuex.Store({
 
     // Controller module
     controller: controllerModule,
+
+    // Popup module
+    popup: popupModule,
 
     // Editor module
     editor: editorModule,
