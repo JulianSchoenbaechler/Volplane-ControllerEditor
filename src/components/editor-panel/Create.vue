@@ -1,38 +1,5 @@
 <template>
   <div>
-    <transition name="fade">
-
-      <!-- add view confirmation popup -->
-      <popup v-if="addPopup" title="Add View" @submit="add">
-        <p>
-          Enter a <strong>name identifier</strong> for the new element. The name identifier is the
-          direct connection between Unity and this controller element and will be used to access it
-          from code.
-        </p>
-        <input
-          type="text"
-          v-model="tempElement"
-          @input="sanitize"
-          v-autofocus
-        />
-        <p v-if="addError" class="color-red">
-          {{ addError }}
-        </p>
-        <p>
-          An element name should not contain any special characters with the exception of <b>-</b>
-          (dash) and <b>_</b> (underline).
-        </p>
-        <div class="split right">
-          <input type="button" value="Cancel" @click="addPopup = false" />
-        </div>
-        <div class="split left">
-          <input type="submit" value="OK" />
-        </div>
-      </popup>
-
-    </transition>
-
-    <!-- main panel -->
     <h2>Create New Element</h2>
 
     <div class="property">
@@ -41,7 +8,7 @@
           class="new-text"
           type="button"
           value="Text / Image"
-          @click="addRequest($event, 'text')"
+          @click="add('text', $event)"
         />
       </div>
       <div>
@@ -76,17 +43,34 @@
 </template>
 
 <script>
-import sanitizeName from '../../utils/stringSanitizer';
+const typeToString = (type) => {
+  switch (type) {
+    case 'text':
+      return 'Text / Image';
+    case 'button':
+      return 'Button';
+    case 'swipe':
+      return 'Swipe Field';
+    case 'touch':
+      return 'Touch Area';
+    case 'dpad':
+      return 'D-Pad';
+    case 'dpadRelative':
+      return 'Relative D-Pad';
+    case 'joystick':
+      return 'Joystick';
+    case 'joystickRelative':
+      return 'Relative Joystick';
+    default:
+      return null;
+  }
+};
 
 export default {
   name: 'editor-panel-create',
 
   data() {
     return {
-      tempElement: null,
-      tempType: null,
-      addPopup: false,
-      addError: null,
     };
   },
 
@@ -104,17 +88,40 @@ export default {
 
   methods: {
 
-    // Sanitize 'tempElement' value from special characters
-    sanitize() {
-      const sanitized = sanitizeName(this.tempElement);
-
-      if (sanitized !== false) this.tempElement = sanitized;
-    },
-
     // Add view button
     // Event handler
-    addRequest(event = null, type = null) {
+    add(type = null, event = null) {
+      const i = this.views.findIndex(v => v.name === this.activeView);
+
       if (event) event.stopPropagation();
+
+      this.$store.dispatch('popup/prompt', {
+        title: `Add ${typeToString(type)}`,
+        text: 'Enter a <strong>name identifier</strong> for the new element. The name identifier '
+          + 'is the direct connection between Unity and this controller element and will be used '
+          + 'to access it from code.',
+        restrictions: {
+          values: this.views[i].content.map(e => e.name),
+          error: 'An element with this name identifier already exists!',
+        },
+      }).then((name) => {
+        if (name) {
+          // Save this action
+          this.$store.dispatch('history/register', {
+            type: 'addElement',
+            activeView: this.activeView,
+          });
+
+          // Adding new element
+          this.$store.commit('controller/addElement', {
+            view: this.activeView,
+            name,
+            type,
+          });
+        }
+      }, (error) => {
+        throw new Error(error);
+      });
 
       if (this.addPopup) return;
 
@@ -123,42 +130,6 @@ export default {
       this.tempType = type;
       this.addPopup = true;
     },
-
-    // Add view with name
-    add(elements) {
-      if (!this.tempElement || this.tempElement.length < 3) {
-        this.addError = 'The view name identifier must be at least 3 characters long!';
-        elements[0].select();
-        return;
-      }
-
-      const i = this.views.findIndex(v => v.name === this.activeView);
-
-      if (this.views[i].content.some(e => e.name === this.tempElement)) {
-        this.addError = 'An element with this name identifier already exists in the current view!';
-        elements[0].select();
-        return;
-      }
-
-      // Save this action
-      this.$store.dispatch('history/register', {
-        type: 'addElement',
-        activeView: this.activeView,
-      });
-
-      // Adding new element
-      this.$store.commit('controller/addElement', {
-        view: this.activeView,
-        name: this.tempElement,
-        type: this.tempType,
-      });
-      // Set active element
-
-      this.tempElement = null;
-      this.tempType = null;
-      this.addPopup = false;
-    },
-
   },
 };
 </script>

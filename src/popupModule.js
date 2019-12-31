@@ -16,9 +16,8 @@ export default {
     cancelText: 'Cancel',
     inputBounds: { min: 3, max: 25 },
     inputRestrictions: {
-      term: 'value',
-      type: 'identifier',
       values: [],
+      error: 'Input error!',
     },
   },
 
@@ -90,9 +89,8 @@ export default {
         state.cancelText = options.cancel || 'Cancel';
         state.inputBounds.min = options.min || 3;
         state.inputBounds.max = options.max || 25;
-        state.inputRestrictions.term = options.term || 'value';
-        state.inputRestrictions.type = options.type || 'identifier';
-        state.inputRestrictions.values = options.restrictions || [];
+        state.inputRestrictions.values = options.restrictions.values || [];
+        state.inputRestrictions.error = options.restrictions.error || 'Input error!';
 
         state.cancelButton = true;
         state.displayInput = true;

@@ -261,9 +261,10 @@ export default {
           + 'access it from code.',
         additionalText: 'A view name should not contain any special characters with the exception '
           + 'of <b>-</b> (dash) and <b>_</b> (underline).',
-        term: 'view',
-        type: 'name identifier',
-        restrictions: this.views.map(v => v.name),
+        restrictions: {
+          values: this.views.map(v => v.name),
+          error: 'A view with this name identifier already exists!',
+        },
       }).then((name) => {
         if (name) {
           // Save this action

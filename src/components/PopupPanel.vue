@@ -77,7 +77,7 @@ export default {
       if (this.displayInput) {
         const input = this.inputValue;
         const { min, max } = this.inputBounds;
-        const { term, type, values } = this.inputRestrictions;
+        const { values, error } = this.inputRestrictions;
 
         // Incorrect character count
         if ((input.length < min) || (input.length > max)) {
@@ -88,13 +88,12 @@ export default {
 
         // Invalid value
         } else if (values.includes(input)) {
-          this.$store.commit('popup/showError', {
-            error: `A ${term} with this ${type} already exists!`,
-          });
+          this.$store.commit('popup/showError', { error });
 
         // Everything fine -> submit
         } else {
           this.$store.commit('popup/submitPopup', input);
+          this.inputValue = '';
         }
       } else {
         this.$store.commit('popup/submitPopup', true);
@@ -104,6 +103,7 @@ export default {
     // Close popup
     close() {
       this.$store.commit('popup/closePopup', false);
+      this.inputValue = '';
     },
 
     // Sanitize input value from special characters
