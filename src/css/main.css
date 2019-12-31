@@ -189,6 +189,19 @@
   font-style: normal;
 }
 
+/* VARIABLES */
+:root {
+  --color-dark1: #222125;
+  --color-dark2: #313133;
+  --color-dark3: #1b1b1e;
+  --color-dark4: #141416;
+  --color-bright1: #f8f8ec;
+  --color-selection: #cdaf7b;
+  --color-selection-background: #525156;
+  --color-accent: #7a2f34;
+  --color-accent-highlight: #87383c;
+}
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -211,8 +224,8 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
-  color: #f8f8ec;
-  background-color: #313133;
+  color: var(--color-bright1);
+  background-color: var(--color-dark2);
   background-image: url("../assets/img/main-background.jpg");
   background-position: left top;
   background-repeat: repeat;
@@ -230,14 +243,14 @@ html, body {
  */
 
 ::-moz-selection {
-  color: #cdaf7b;
-  background: #525156;
+  color: var(--color-selection);
+  background: var(--color-selection-background);
   text-shadow: none;
 }
 
 ::selection {
-  color: #cdaf7b;
-  background: #525156;
+  color: var(--color-selection);
+  background: var(--color-selection-background);
   text-shadow: none;
 }
 
@@ -249,7 +262,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--color-accent);
   margin: 1em 0;
   padding: 0;
 }
@@ -285,17 +298,6 @@ fieldset {
 
 textarea {
   resize: vertical;
-}
-
-/* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
 }
 
 /* ==========================================================================
@@ -371,10 +373,10 @@ input {
   font-style: normal;
   font-size: 14px;
   line-height: normal !important;
-  color: #f8f8ec;
-  background-color: #313133;
+  color: var(--color-bright1);
+  background-color: var(--color-dark2);
   box-sizing: border-box;
-  border: 1px solid #7a2f34;
+  border: 1px solid var(--color-accent);
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
@@ -403,15 +405,15 @@ input[type="reset"] {
   outline: none;
 }
 input[type="submit"] {
-  background-color: #7a2f34;
+  background-color: var(--color-accent);
 }
 input[type="submit"]:active,
 input[type="submit"]:hover {
-  background-color: #87383c;
+  background-color: var(--color-accent-highlight);
 }
 input[type="button"]:active,
 input[type="reset"]:active {
-  background-color: #222125;
+  background-color: var(--color-dark1);
 }
 input[type="checkbox"] {
   cursor: pointer;
@@ -424,9 +426,9 @@ textarea {
   font-weight: 200;
   font-style: normal;
   font-size: 14px;
-  color: #f8f8ec;
-  background-color: #313133;
-  border: 1px solid #7a2f34;
+  color: var(--color-bright1);
+  background-color: var(--color-dark2);
+  border: 1px solid var(--color-accent);
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
@@ -446,10 +448,10 @@ select {
   font-weight: 200;
   font-style: normal;
   font-size: 14px;
-  color: #f8f8ec;
+  color: var(--color-bright1);
   cursor: pointer;
-  background-color: #313133;
-  border: 1px solid #7a2f34;
+  background-color: var(--color-dark2);
+  border: 1px solid var(--color-accent);
   border-radius: 4px;
   appearance: none;
   transition: all 0.2s ease-in-out;
@@ -475,7 +477,7 @@ label {
   font-style: normal;
   font-size: 14px;
   line-height: normal;
-  color: #f8f8ec;
+  color: var(--color-bright1);
   cursor: pointer;
 }
 
@@ -499,7 +501,7 @@ label {
   height: auto;
   flex: 0 1 auto;
   text-align: center;
-  background-color: #222125;
+  background-color: var(--color-dark1);
 }
 #ce-title h1 {
   margin: 0;
@@ -507,7 +509,7 @@ label {
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
-  border-bottom: 2px solid #7a2f34
+  border-bottom: 2px solid var(--color-accent)
 }
 #ce-title samp {
   display: block;
@@ -543,7 +545,7 @@ main {
   display: block;
   position: relative;
   grid-area: toolbox;
-  background-color: #141416;
+  background-color: var(--color-dark4);
 }
 
 /* EDITOR PANEL / PROPERTY PANEL */
@@ -551,7 +553,7 @@ main {
   display: block;
   position: relative;
   grid-area: props;
-  background-color: #1b1b1e;
+  background-color: var(--color-dark3);
   background-image: url("../assets/img/props-background.jpg");
   background-position: left top;
   background-repeat: repeat;
@@ -618,14 +620,14 @@ main {
   display: block;
   position: relative;
   grid-area: footer;
-  color: #222125;
-  background-color: #7a2f34;
+  color: var(--color-dark1);
+  background-color: var(--color-accent);
 }
 
 /* LOADING PANEL */
 #ce-loading {
-  color: #222125;
-  background-color: #7a2f34;
+  color: var(--color-dark1);
+  background-color: var(--color-accent);
 }
 
 /* ==========================================================================
@@ -733,23 +735,6 @@ main {
 }
 
 /* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ("mobile first") styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
-@media print,
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 1.25dppx),
-       (min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
-}
-
-/* ==========================================================================
    Print styles.
    Inlined to avoid the additional HTTP request:
    https://www.phpied.com/delay-loading-your-print-css/
@@ -760,7 +745,7 @@ main {
   *:before,
   *:after {
     background: transparent !important;
-    color: #000 !important; /* Black prints faster */
+    color: #000000 !important; /* Black prints faster */
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
@@ -794,7 +779,7 @@ main {
   }
   pre,
   blockquote {
-    border: 1px solid #999;
+    border: 1px solid #999999;
     page-break-inside: avoid;
   }
 
