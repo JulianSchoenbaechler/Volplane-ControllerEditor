@@ -117,11 +117,13 @@ export default {
     // Submit popup
     submitPopup(state) {
       state.isOpen = false;
+      state.displayError = false;
     },
 
     // Close popup
     closePopup(state) {
       state.isOpen = false;
+      state.displayError = false;
     },
 
   },

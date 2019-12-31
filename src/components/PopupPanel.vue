@@ -73,7 +73,7 @@ export default {
   methods: {
 
     // Submit popup
-    submit() {
+    submit(element) {
       if (this.displayInput) {
         const input = this.inputValue;
         const { min, max } = this.inputBounds;
@@ -85,10 +85,12 @@ export default {
             error: `The view name identifier must have a length ranging from ${min} to ${max} `
               + 'characters.',
           });
+          element[0].select();
 
         // Invalid value
         } else if (values.includes(input)) {
           this.$store.commit('popup/showError', { error });
+          element[0].select();
 
         // Everything fine -> submit
         } else {
