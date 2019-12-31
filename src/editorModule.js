@@ -27,7 +27,7 @@ export default {
   mutations: {
 
     // Set the active view
-    setActiveView(state, name = 'noname') {
+    setActiveView(state, name = '') {
       state.activeView = name;
     },
 

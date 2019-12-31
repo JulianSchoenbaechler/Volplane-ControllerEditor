@@ -1,7 +1,11 @@
 <template>
   <transition name="fade">
     <popup v-if="isOpen" :title="title" @submit="submit">
+
+      <!-- Popup text -->
       <p v-html="popupText"></p>
+
+      <!-- Input field -->
       <input
         v-if="displayInput"
         type="text"
@@ -9,6 +13,8 @@
         @input="sanitize"
         v-autofocus
       />
+
+      <!-- Error and additional text -->
       <p v-if="displayError" class="color-red" v-html="errorText"></p>
       <p v-if="displayAdditional" v-html="additionalText"></p>
 
@@ -61,6 +67,7 @@ export default {
     'submitText',
     'cancelText',
     'inputBounds',
+    'inputRestrictions',
   ]),
 
   methods: {
@@ -68,25 +75,35 @@ export default {
     // Submit popup
     submit() {
       if (this.displayInput) {
+        const input = this.inputValue;
         const { min, max } = this.inputBounds;
+        const { term, type, values } = this.inputRestrictions;
 
-        if ((this.inputValue.length < min) || (this.inputValue.length > max)) {
+        // Incorrect character count
+        if ((input.length < min) || (input.length > max)) {
           this.$store.commit('popup/showError', {
-            error: 'A view name should not contain any special characters with the exception of '
-              + '<b>-</b> (dash) and <b>_</b> (underline) and must have a length ranging from '
-              + `${min} to ${max} characters.`,
+            error: `The view name identifier must have a length ranging from ${min} to ${max} `
+              + 'characters.',
           });
 
-          return;
-        }
-      }
+        // Invalid value
+        } else if (values.includes(input)) {
+          this.$store.commit('popup/showError', {
+            error: `A ${term} with this ${type} already exists!`,
+          });
 
-      this.$store.commit('popup/submitPopup');
+        // Everything fine -> submit
+        } else {
+          this.$store.commit('popup/submitPopup', input);
+        }
+      } else {
+        this.$store.commit('popup/submitPopup', true);
+      }
     },
 
     // Close popup
     close() {
-      this.$store.commit('popup/closePopup');
+      this.$store.commit('popup/closePopup', false);
     },
 
     // Sanitize input value from special characters

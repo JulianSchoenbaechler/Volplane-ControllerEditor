@@ -15,6 +15,11 @@ export default {
     submitText: 'OK',
     cancelText: 'Cancel',
     inputBounds: { min: 3, max: 25 },
+    inputRestrictions: {
+      term: 'value',
+      type: 'identifier',
+      values: [],
+    },
   },
 
   // Popup getters
@@ -85,6 +90,9 @@ export default {
         state.cancelText = options.cancel || 'Cancel';
         state.inputBounds.min = options.min || 3;
         state.inputBounds.max = options.max || 25;
+        state.inputRestrictions.term = options.term || 'value';
+        state.inputRestrictions.type = options.type || 'identifier';
+        state.inputRestrictions.values = options.restrictions || [];
 
         state.cancelButton = true;
         state.displayInput = true;

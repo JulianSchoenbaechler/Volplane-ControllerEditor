@@ -1,52 +1,5 @@
 <template>
   <div id="ce-canvas-tabs">
-    <transition name="fade">
-
-      <!-- remove view confirmation popup -->
-      <popup v-if="removePopup" title="Delete View" @submit="remove">
-        <p>
-          Are you sure you want to remove the view <em>{{ tempView }}</em> with all its contents
-          from the controller?
-        </p>
-        <div class="split right">
-          <input type="button" value="No" @click="removePopup = false" />
-        </div>
-        <div class="split left">
-          <input type="submit" value="Yes" v-autofocus />
-        </div>
-      </popup>
-
-      <!-- add view confirmation popup -->
-      <popup v-if="addPopup" title="Add View" @submit="add">
-        <p>
-          Enter a <strong>name identifier</strong> for the new view. The name identifier is the
-          direct connection between Unity and this controller view and will be used to access it
-          from code.
-        </p>
-        <input
-          type="text"
-          v-model="tempView"
-          @input="sanitize"
-          v-autofocus
-        />
-        <p v-if="addError" class="color-red">
-          {{ addError }}
-        </p>
-        <p>
-          A view name should not contain any special characters with the exception of <b>-</b>
-          (dash) and <b>_</b> (underline).
-        </p>
-        <div class="split right">
-          <input type="button" value="Cancel" @click="addPopup = false" />
-        </div>
-        <div class="split left">
-          <input type="submit" value="OK" />
-        </div>
-      </popup>
-
-    </transition>
-
-    <!-- tabs -->
     <ul ref="container">
 
       <li v-show="arrow.left" class="small" @click="shiftTabs(true, $event)">
@@ -67,7 +20,7 @@
         @click="setActive(views[i].name, $event)"
       >
         {{ views[i].name }}
-        <span class="inline-control delete" @click="removeRequest(views[i].name, $event)">
+        <span class="inline-control delete" @click="remove(views[i].name, $event)">
           <font-awesome-icon icon="times" />
         </span>
         <span
@@ -85,7 +38,7 @@
         </span>
       </li>
 
-      <li :class="overflow ? 'small' : 'floating'" @click="addRequest($event)">
+      <li :class="overflow ? 'small' : 'floating'" @click="add($event)">
         <span class="inline-control">
           <font-awesome-icon icon="plus" />
         </span>
@@ -96,8 +49,6 @@
 </template>
 
 <script>
-import sanitizeName from '../../utils/stringSanitizer';
-
 export default {
   name: 'editor-canvas-tabs',
 
@@ -109,10 +60,6 @@ export default {
         right: false,
         left: false,
       },
-      tempView: null,
-      addPopup: false,
-      addError: null,
-      removePopup: false,
     };
   },
 
@@ -120,6 +67,11 @@ export default {
     // The controller views
     views() {
       return this.$store.getters['controller/views'];
+    },
+
+    // The controllers default view name identifier
+    defaultView() {
+      return this.$store.getters['controller/defaultView'];
     },
 
     // The editors active view name identifier
@@ -294,41 +246,79 @@ export default {
         }
       });
 
-      if (foundView) {
-        this.$store.commit('editor/setActiveView', name);
-      } else {
-        this.$store.commit('editor/setActiveView', '');
-      }
-    },
-
-    // Sanitize 'tempView' value from special characters
-    sanitize() {
-      const sanitized = sanitizeName(this.tempView);
-
-      if (sanitized !== false) this.tempView = sanitized;
+      this.$store.commit('editor/setActiveView', foundView ? name : '');
     },
 
     // Add view button
     // Event handler
-    addRequest(event = null) {
+    add(event = null) {
       if (event) event.stopPropagation();
 
-      if (this.addPopup) return;
+      this.$store.dispatch('popup/prompt', {
+        title: 'Add View',
+        text: 'Enter a <strong>name identifier</strong> for the new view. The name identifier is '
+          + 'the direct connection between Unity and this controller view and will be used to '
+          + 'access it from code.',
+        additionalText: 'A view name should not contain any special characters with the exception '
+          + 'of <b>-</b> (dash) and <b>_</b> (underline).',
+        term: 'view',
+        type: 'name identifier',
+        restrictions: this.views.map(v => v.name),
+      }).then((name) => {
+        if (name) {
+          // Save this action
+          this.$store.dispatch('history/register', {
+            type: 'addView',
+            activeView: this.activeView,
+          });
 
-      this.tempView = null;
-      this.addError = null;
-      this.addPopup = true;
+          // Adding new view
+          this.$store.commit('controller/addView', name);
+          this.$store.commit('editor/setActiveView', name);
+        }
+      }, (error) => {
+        throw new Error(error);
+      });
     },
 
     // Remove view button
     // Event handler
-    removeRequest(name = null, event = null) {
+    remove(name = null, event = null) {
       if (event) event.stopPropagation();
 
-      if (this.removePopup) return;
+      this.$store.dispatch('popup/confirm', {
+        title: 'Remove View',
+        text: `Are you sure you want to remove the view <em>${name}</em> with all its contents `
+          + 'from the controller?',
+      }).then((confirmed) => {
+        if (confirmed) {
+          const { defaultView } = this;
 
-      this.tempView = name;
-      this.removePopup = true;
+          // Save this action
+          this.$store.dispatch('history/register', {
+            type: 'removeView',
+            activeView: this.activeView,
+          });
+
+          this.$store.commit('controller/removeView', name);
+
+          if (this.views.length > 0) {
+            // Removed the default view?
+            // Set default to the first view
+            if (name === defaultView) {
+              this.makeDefault(this.views[0].name);
+            }
+
+            // Removed the active view?
+            // Set to the first view
+            if (name === this.activeView) {
+              this.setActive(this.views[0].name);
+            }
+          }
+        }
+      }, (error) => {
+        throw new Error(error);
+      });
     },
 
     // Make default view button
@@ -344,57 +334,6 @@ export default {
       });
 
       this.$store.commit('controller/makeDefaultView', name);
-    },
-
-    // Add view with name
-    add(elements) {
-      if (!this.tempView || this.tempView.length < 3) {
-        this.addError = 'The view name identifier must be at least 3 characters long!';
-        elements[0].select();
-        return;
-      }
-
-      if (this.views.some(v => v.name === this.tempView)) {
-        this.addError = 'A view with this name identifier already exists!';
-        elements[0].select();
-        return;
-      }
-
-      // Save this action
-      this.$store.dispatch('history/register', {
-        type: 'addView',
-        activeView: this.activeView,
-      });
-
-      // Adding new view
-      this.$store.commit('controller/addView', this.tempView);
-      this.$store.commit('editor/setActiveView', this.tempView);
-
-      this.tempView = null;
-      this.addPopup = false;
-    },
-
-    // Remove view with name
-    remove() {
-      // Save this action
-      this.$store.dispatch('history/register', {
-        type: 'removeView',
-        activeView: this.tempView,
-      });
-
-      this.$store.commit('controller/removeView', this.tempView);
-
-      // Removed the active view?
-      // Set to the first view
-      if (this.tempView === this.activeView && this.views.length > 0) {
-        this.setActive(this.views[0].name);
-      } else {
-        this.setActive();
-      }
-
-      // Close popup and reset staged view
-      this.removePopup = false;
-      this.tempView = null;
     },
   },
 

@@ -297,10 +297,6 @@ export default {
       if (this.mode === 'edit') return;
       if (!e.shiftKey) this.mode = 'edit';
     },
-
-    test() {
-      console.log('test');
-    },
   },
 
   mounted() {
@@ -398,7 +394,9 @@ export default {
   margin: -320px 0 0 -180px;
   padding: 0;
   text-align: center;
-  background-image: url("../../assets/img/pirate.jpg");
+  /* TODO: Make dynamic */
+  background-color: #1f1d2a;
+  /* background-image: url("../../assets/img/pirate.jpg"); */
   background-size: cover;
   background-position: center;
 }
