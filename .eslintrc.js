@@ -28,7 +28,7 @@ module.exports = {
     parser: 'babel-eslint'
   },
 
-  'extends': [
+  extends: [
     'plugin:vue/strongly-recommended',
     'plugin:vue/recommended',
     '@vue/airbnb'
