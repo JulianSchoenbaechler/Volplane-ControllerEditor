@@ -69,7 +69,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   store: Store,
-  render: h => h(App),
   mounted() {
     this.$nextTick(() => {
       const url = new URL(window.location.href);
@@ -88,4 +87,5 @@ new Vue({
       this.$store.dispatch('loadController', url.searchParams.get('controller'));
     });
   },
+  render: (h) => h(App),
 }).$mount('#app');

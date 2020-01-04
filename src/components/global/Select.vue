@@ -6,23 +6,23 @@
     @keypress.enter="valueChange(localValue)"
   >
     <input
-      type="text"
       ref="input"
+      type="text"
       v-bind="$attrs"
       :name="name"
       :value="localValue"
       v-on="listeners"
       @input="valueInput($event)"
-    />
+    >
     <font-awesome-icon icon="sort-down" />
     <ul>
       <li
         v-for="(item, i) in computedOptions"
-        :key="'select-' + i"
-        :class="item.class"
         v-show="item.class === 'category' ||
           freshOpened ||
           item.value.toLowerCase().startsWith(localValue.toLowerCase())"
+        :key="'select-' + i"
+        :class="item.class"
         @click="item.class !== 'category' ?
           valueChange(item.value, $event) :
           $event.stopPropagation()"
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'v-select',
+  name: 'VSelect',
   inheritAttrs: false,
 
   model: {
@@ -44,9 +44,18 @@ export default {
   },
 
   props: {
-    name: String,
-    value: String,
-    options: Array,
+    name: {
+      type: String,
+      default: '',
+    },
+    value: {
+      type: String,
+      default: '',
+    },
+    options: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
@@ -91,7 +100,7 @@ export default {
           list = [...list, { class: 'category', value: n.value }];
           list = [
             ...list,
-            ...n.options.map(val => ({ class: 'item', value: val })),
+            ...n.options.map((val) => ({ class: 'item', value: val })),
           ];
         });
       }
@@ -111,6 +120,18 @@ export default {
     },
   },
 
+  mounted() {
+    this.$nextTick(() => {
+      // Listen for window resizing event
+      window.addEventListener('click', this.windowClick);
+    });
+  },
+
+  beforeDestroy() {
+    // Unsubscribe event listener(s)
+    window.removeEventListener('click', this.windowClick);
+  },
+
   methods: {
     // Input event handler
     valueInput(e) {
@@ -128,9 +149,9 @@ export default {
       if (this.options) {
         const opts = this.isSingle
           ? [...this.options]
-          : [].concat(...this.options.map(n => n.options));
+          : [].concat(...this.options.map((n) => n.options));
 
-        value = opts.find(v => v.startsWith(val)) || opts[0];
+        value = opts.find((v) => v.startsWith(val)) || opts[0];
       } else {
         value = '';
       }
@@ -169,18 +190,6 @@ export default {
     windowClick() {
       if (!this.selfClick) { this.toggle(false); }
     },
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      // Listen for window resizing event
-      window.addEventListener('click', this.windowClick);
-    });
-  },
-
-  beforeDestroy() {
-    // Unsubscribe event listener(s)
-    window.removeEventListener('click', this.windowClick);
   },
 };
 </script>

@@ -8,25 +8,40 @@
       :checked="checked"
       v-on="listeners"
       @change="$emit('change', $event.target.checked)"
+    >
+    <font-awesome-icon
+      v-if="checked"
+      icon="dot-circle"
     />
-    <font-awesome-icon v-if="checked" icon="dot-circle" />
-    <font-awesome-icon v-else :icon="['far', 'circle']" />
-    <slot>{{ this.value }}</slot>
+    <font-awesome-icon
+      v-else
+      :icon="['far', 'circle']"
+    />
+    <slot>{{ value }}</slot>
   </label>
 </template>
 
 <script>
 export default {
-  name: 'v-radio',
+  name: 'VRadio',
   inheritAttrs: false,
   model: {
     prop: 'checked',
     event: 'change',
   },
   props: {
-    name: String,
-    value: String,
-    checked: Boolean,
+    name: {
+      type: String,
+      default: '',
+    },
+    value: {
+      type: String,
+      default: '',
+    },
+    checked: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     listeners() {

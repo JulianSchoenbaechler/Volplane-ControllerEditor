@@ -1,8 +1,11 @@
 <template>
   <div id="ce-canvas-tabs">
     <ul ref="container">
-
-      <li v-show="arrow.left" class="small" @click="shiftTabs(true, $event)">
+      <li
+        v-show="arrow.left"
+        class="small"
+        @click="shiftTabs(true, $event)"
+      >
         <span class="inline-control">
           <font-awesome-icon icon="angle-left" />
         </span>
@@ -10,8 +13,8 @@
 
       <li
         v-for="(visible, i) in visibility"
-        :key="`view-${i}`"
         v-show="visible.value"
+        :key="`view-${i}`"
         :class="{
           default: views[i].default,
           active: visible.active,
@@ -20,7 +23,10 @@
         @click="setActive(views[i].name, $event)"
       >
         {{ views[i].name }}
-        <span class="inline-control delete" @click="remove(views[i].name, $event)">
+        <span
+          class="inline-control delete"
+          @click="remove(views[i].name, $event)"
+        >
           <font-awesome-icon icon="times" />
         </span>
         <span
@@ -28,29 +34,38 @@
           class="inline-control make-default"
           @click="makeDefault(views[i].name, $event)"
         >
-          <font-awesome-icon icon="bullseye" title="Make default" />
+          <font-awesome-icon
+            icon="bullseye"
+            title="Make default"
+          />
         </span>
       </li>
 
-      <li v-show="arrow.right" class="small" @click="shiftTabs(false, $event)">
+      <li
+        v-show="arrow.right"
+        class="small"
+        @click="shiftTabs(false, $event)"
+      >
         <span class="inline-control">
           <font-awesome-icon icon="angle-right" />
         </span>
       </li>
 
-      <li :class="overflow ? 'small' : 'floating'" @click="add($event)">
+      <li
+        :class="overflow ? 'small' : 'floating'"
+        @click="add($event)"
+      >
         <span class="inline-control">
           <font-awesome-icon icon="plus" />
         </span>
       </li>
-
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'editor-canvas-tabs',
+  name: 'EditorCanvasTabs',
 
   data() {
     return {
@@ -129,6 +144,18 @@ export default {
     },
   },
 
+  mounted() {
+    this.$nextTick(() => {
+      // Listen for window resizing event
+      window.addEventListener('resize', this.handleOverflow);
+    });
+  },
+
+  beforeDestroy() {
+    // Unsubscribe event listener(s)
+    window.removeEventListener('resize', this.handleOverflow);
+  },
+
   methods: {
     // Checks the tabs for overflow and handles the rearrangement
     handleOverflow() {
@@ -139,7 +166,7 @@ export default {
 
       // Inline function for calculating minimum space required for a specified amount of tabs.
       const minWidth = (numberOfTabs = 1) => {
-        const itemWidths = this.visibility.map(v => v.width);
+        const itemWidths = this.visibility.map((v) => v.width);
         let w = 0;
 
         // Adding together the width of the greatest tabs
@@ -165,7 +192,7 @@ export default {
           this.overflow = false;
         }
       } else {
-        let tabCount = this.visibility.filter(v => v.value === true).length;
+        let tabCount = this.visibility.filter((v) => v.value === true).length;
         const maxTabs = this.visibility.length;
         const bottomLimit = minWidth(tabCount);
         const upperLimit = tabCount < maxTabs ? minWidth(tabCount + 1) : list.clientWidth;
@@ -262,7 +289,7 @@ export default {
         additionalText: 'A view name should not contain any special characters with the exception '
           + 'of <b>-</b> (dash) and <b>_</b> (underline).',
         restrictions: {
-          values: this.views.map(v => v.name),
+          values: this.views.map((v) => v.name),
           error: 'A view with this name identifier already exists!',
         },
       }).then((name) => {
@@ -336,18 +363,6 @@ export default {
 
       this.$store.commit('controller/makeDefaultView', name);
     },
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      // Listen for window resizing event
-      window.addEventListener('resize', this.handleOverflow);
-    });
-  },
-
-  beforeDestroy() {
-    // Unsubscribe event listener(s)
-    window.removeEventListener('resize', this.handleOverflow);
   },
 };
 </script>

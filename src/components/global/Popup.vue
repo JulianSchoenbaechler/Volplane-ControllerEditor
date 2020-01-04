@@ -9,10 +9,16 @@
       >
         <slot>
           <div class="split right">
-            <input type="button" value="Cancel" />
+            <input
+              type="button"
+              value="Cancel"
+            >
           </div>
           <div class="split left">
-            <input type="submit" value="OK" />
+            <input
+              type="submit"
+              value="OK"
+            >
           </div>
         </slot>
       </form>
@@ -22,10 +28,16 @@
 
 <script>
 export default {
-  name: 'popup',
+  name: 'Popup',
   props: {
-    title: String,
-    handler: Function,
+    title: {
+      type: String,
+      default: 'Popup',
+    },
+    handler: {
+      type: Function,
+      default: () => { },
+    },
   },
   computed: {
     // The component event listeners

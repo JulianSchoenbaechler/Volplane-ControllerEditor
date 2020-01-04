@@ -12,34 +12,43 @@
       :style="consoleStyle"
     >
       <!-- grid -->
-      <table class="grid" v-show="snapToGrid">
-        <tr v-for="y in gridSplitY" :key="`grid-y-${y}`">
-          <td v-for="x in gridSplitX" :key="`grid-x-${x}`"></td>
+      <table
+        v-show="snapToGrid"
+        class="grid"
+      >
+        <tr
+          v-for="y in gridSplitY"
+          :key="`grid-y-${y}`"
+        >
+          <td
+            v-for="x in gridSplitX"
+            :key="`grid-x-${x}`"
+          />
         </tr>
       </table>
 
       <!-- iterate view elements -->
       <view-element
         v-for="el in view.content"
-        v-bind:key="el.name"
+        :key="el.name"
         :name="el.name"
         :view="activeView"
-        :parentPixelW="parseInt(consoleStyle.width.slice(0, -2))"
-        :parentPixelH="parseInt(consoleStyle.height.slice(0, -2))"
-        :preventActiveBehavior="mode === 'move'"
-        :isDraggable="mode === 'edit'"
-        :isResizable="mode === 'edit'"
-        :snapToGrid="snapToGrid"
-        :gridX="100 / gridSplitX"
-        :gridY="100 / gridSplitY"
+        :parent-pixel-w="parseInt(consoleStyle.width.slice(0, -2))"
+        :parent-pixel-h="parseInt(consoleStyle.height.slice(0, -2))"
+        :prevent-active-behavior="mode === 'move'"
+        :is-draggable="mode === 'edit'"
+        :is-resizable="mode === 'edit'"
+        :snap-to-grid="snapToGrid"
+        :grid-x="100 / gridSplitX"
+        :grid-y="100 / gridSplitY"
         :w="el.width"
         :h="el.height"
         :x="el.x"
         :y="el.y"
         :z="el.layer"
-        :zoomLevel="zoomLevel"
+        :zoom-level="zoomLevel"
       >
-        {{el.name}}
+        {{ el.name }}
       </view-element>
 
       <!-- demo rectangle -->
@@ -71,7 +80,7 @@
         :value="gridSplitX"
         @focus="$event.currentTarget.select()"
         @change="handleGridControl($event, true)"
-      />
+      >
       <span class="inline-label">&nbsp;Y:</span>
       <input
         type="number"
@@ -79,12 +88,15 @@
         :value="gridSplitY"
         @focus="$event.currentTarget.select()"
         @change="handleGridControl($event, false)"
-      />
+      >
     </div>
 
     <!-- canvas right controls -->
     <div class="ce-canvas-controls right">
-      <span class="inline-control float-left" @click="zoomOut">
+      <span
+        class="inline-control float-left"
+        @click="zoomOut"
+      >
         <font-awesome-icon icon="search-minus" />
       </span>
       <input
@@ -93,8 +105,11 @@
         @focus="$event.currentTarget.select()"
         @input="handleZoomControl($event)"
         @change="handleZoomControl($event, true)"
-      />
-      <span class="inline-control float-right" @click="zoomIn">
+      >
+      <span
+        class="inline-control float-right"
+        @click="zoomIn"
+      >
         <font-awesome-icon icon="search-plus" />
       </span>
     </div>
@@ -106,7 +121,7 @@ import { dragscroll } from 'vue-dragscroll';
 import Element from './workspace/Element.vue';
 
 export default {
-  name: 'editor-canvas-workspace',
+  name: 'EditorCanvasWorkspace',
 
   directives: { dragscroll },
 
@@ -146,7 +161,7 @@ export default {
     // The active controller view data
     view() {
       const views = this.$store.getters['controller/views'];
-      return views.find(v => v.name === this.activeView) || {};
+      return views.find((v) => v.name === this.activeView) || {};
     },
   },
 
@@ -159,6 +174,24 @@ export default {
       this.$store.commit('editor/setZoomLevel', 1);
       this.recalculateConsoleSize();
     },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      // Listen for window resizing event
+      window.addEventListener('resize', this.recalculateConsoleSize);
+
+      // Listen for window keydown/keyup event
+      window.addEventListener('keydown', this.keydownHandler);
+      window.addEventListener('keyup', this.keyupHandler);
+    });
+  },
+
+  beforeDestroy() {
+    // Unsubscribe event listener(s)
+    window.removeEventListener('resize', this.recalculateConsoleSize);
+    window.removeEventListener('keydown', this.keydownHandler);
+    window.removeEventListener('keyup', this.keyupHandler);
   },
 
   methods: {
@@ -297,24 +330,6 @@ export default {
       if (this.mode === 'edit') return;
       if (!e.shiftKey) this.mode = 'edit';
     },
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      // Listen for window resizing event
-      window.addEventListener('resize', this.recalculateConsoleSize);
-
-      // Listen for window keydown/keyup event
-      window.addEventListener('keydown', this.keydownHandler);
-      window.addEventListener('keyup', this.keyupHandler);
-    });
-  },
-
-  beforeDestroy() {
-    // Unsubscribe event listener(s)
-    window.removeEventListener('resize', this.recalculateConsoleSize);
-    window.removeEventListener('keydown', this.keydownHandler);
-    window.removeEventListener('keyup', this.keyupHandler);
   },
 };
 </script>

@@ -10,7 +10,7 @@ import Tabs from './editor-canvas/Tabs.vue';
 import Workspace from './editor-canvas/Workspace.vue';
 
 export default {
-  name: 'editor-canvas',
+  name: 'EditorCanvas',
   components: {
     Tabs,
     Workspace,

@@ -1,6 +1,9 @@
 <template>
   <transition name="fade">
-    <div id="ce-loading" class="full-screen">
+    <div
+      id="ce-loading"
+      class="full-screen"
+    >
       <p>{{ loadingText }}</p>
     </div>
   </transition>
@@ -8,7 +11,7 @@
 
 <script>
 export default {
-  name: 'loading-panel',
+  name: 'LoadingPanel',
   props: {
     loadingText: {
       default: 'Loading...',

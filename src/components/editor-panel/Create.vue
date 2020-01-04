@@ -9,34 +9,62 @@
           type="button"
           value="Text / Image"
           @click="add('text', $event)"
-        />
+        >
       </div>
       <div>
-        <input class="new-button" type="button" value="Button" />
-      </div>
-    </div>
-    <div class="property">
-      <div>
-        <input class="new-swipe" type="button" value="Swipe Area" />
-      </div>
-      <div>
-        <input class="new-touch" type="button" value="Touch Area" />
+        <input
+          class="new-button"
+          type="button"
+          value="Button"
+        >
       </div>
     </div>
     <div class="property">
       <div>
-        <input class="new-dpad" type="button" value="D-Pad" />
+        <input
+          class="new-swipe"
+          type="button"
+          value="Swipe Area"
+        >
       </div>
       <div>
-        <input class="new-rdpad" type="button" value="Relative D-Pad" />
+        <input
+          class="new-touch"
+          type="button"
+          value="Touch Area"
+        >
       </div>
     </div>
     <div class="property">
       <div>
-        <input class="new-joystick" type="button" value="Joystick" />
+        <input
+          class="new-dpad"
+          type="button"
+          value="D-Pad"
+        >
       </div>
       <div>
-        <input class="new-rjoystick" type="button" value="Relative Joystick" />
+        <input
+          class="new-rdpad"
+          type="button"
+          value="Relative D-Pad"
+        >
+      </div>
+    </div>
+    <div class="property">
+      <div>
+        <input
+          class="new-joystick"
+          type="button"
+          value="Joystick"
+        >
+      </div>
+      <div>
+        <input
+          class="new-rjoystick"
+          type="button"
+          value="Relative Joystick"
+        >
       </div>
     </div>
   </div>
@@ -67,7 +95,7 @@ const typeToString = (type) => {
 };
 
 export default {
-  name: 'editor-panel-create',
+  name: 'EditorPanelCreate',
 
   data() {
     return {
@@ -91,7 +119,7 @@ export default {
     // Add view button
     // Event handler
     add(type = null, event = null) {
-      const i = this.views.findIndex(v => v.name === this.activeView);
+      const i = this.views.findIndex((v) => v.name === this.activeView);
 
       if (event) event.stopPropagation();
 
@@ -101,7 +129,7 @@ export default {
           + 'is the direct connection between Unity and this controller element and will be used '
           + 'to access it from code.',
         restrictions: {
-          values: this.views[i].content.map(e => e.name),
+          values: this.views[i].content.map((e) => e.name),
           error: 'An element with this name identifier already exists!',
         },
       }).then((name) => {

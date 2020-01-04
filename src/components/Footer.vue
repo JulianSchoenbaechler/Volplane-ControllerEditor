@@ -1,5 +1,5 @@
 <template>
-  <footer id="ce-footer"></footer>
+  <footer id="ce-footer" />
 </template>
 
 <script>

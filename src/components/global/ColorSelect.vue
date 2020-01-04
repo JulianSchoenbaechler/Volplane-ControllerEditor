@@ -3,7 +3,7 @@
     class="wrapper"
     v-on="listeners"
   >
-    <div ref="picker"></div>
+    <div ref="picker" />
   </div>
 </template>
 
@@ -13,14 +13,19 @@ import Pickr from '@simonwep/pickr/dist/pickr.min';
 let pickr = null;
 
 export default {
-  name: 'v-color',
+  name: 'VColor',
 
   model: {
     prop: 'value',
     event: 'change',
   },
 
-  props: { value: String },
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+  },
 
   computed: {
     // The component event listeners

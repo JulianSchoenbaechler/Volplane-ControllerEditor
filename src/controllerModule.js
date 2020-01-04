@@ -102,7 +102,7 @@ export default {
     // Remove a view by name
     removeView(state, name = null) {
       if (name) {
-        const i = state.views.findIndex(v => v.name === name);
+        const i = state.views.findIndex((v) => v.name === name);
 
         // If view found, remove it
         if (i < 0) return;
@@ -116,7 +116,7 @@ export default {
     addElement(state, { view, name, type }) {
       if (!view || !name || !type) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
@@ -282,11 +282,11 @@ export default {
     removeElement(state, { name, view }) {
       if (!view || !name) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
-      const j = state.views[i].content.findIndex(e => e.name === name);
+      const j = state.views[i].content.findIndex((e) => e.name === name);
 
       if (j < 0) return;
 
@@ -298,11 +298,11 @@ export default {
     changeElementProperties(state, { view, name, ...data }) {
       if (!view || !name) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
-      const j = state.views[i].content.findIndex(e => e.name === name);
+      const j = state.views[i].content.findIndex((e) => e.name === name);
 
       if (j < 0) return;
 
@@ -322,11 +322,11 @@ export default {
     addElementPreset(state, { view, name, preset }) {
       if (!view || !name || !preset) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
-      const j = state.views[i].content.findIndex(e => e.name === name);
+      const j = state.views[i].content.findIndex((e) => e.name === name);
 
       if (j < 0) return;
 
@@ -339,11 +339,11 @@ export default {
     removeElementPreset(state, { view, name, preset }) {
       if (!view || !name || !preset) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
-      const j = state.views[i].content.findIndex(e => e.name === name);
+      const j = state.views[i].content.findIndex((e) => e.name === name);
 
       if (j < 0) return;
 
@@ -356,11 +356,11 @@ export default {
     changeElementPreset(state, { view, name, preset, ...props }) {
       if (!view || !name || !preset) return;
 
-      const i = state.views.findIndex(v => v.name === view);
+      const i = state.views.findIndex((v) => v.name === view);
 
       if (i < 0) return;
 
-      const j = state.views[i].content.findIndex(e => e.name === name);
+      const j = state.views[i].content.findIndex((e) => e.name === name);
 
       if (j < 0) return;
 

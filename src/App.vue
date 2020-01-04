@@ -23,7 +23,7 @@ import EditorCanvas from './components/EditorCanvas.vue';
 import EditorFooter from './components/Footer.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     'loading-panel': LoadingPanel,
     'popup-panel': PopupPanel,

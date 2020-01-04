@@ -1,7 +1,7 @@
 <template>
   <section id="ce-title">
-      <h1>{{ title }}</h1>
-      <samp>{{ info }}</samp>
+    <h1>{{ title }}</h1>
+    <samp>{{ info }}</samp>
   </section>
 </template>
 

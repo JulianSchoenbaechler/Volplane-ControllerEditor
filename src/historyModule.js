@@ -71,7 +71,7 @@ export default {
   // History actions
   actions: {
 
-    // Register new history dataat the current position
+    // Register new history data at the current position
     register({ commit, state, rootGetters }, { type, activeView }) {
       if (!type || !activeView) { return; }
 

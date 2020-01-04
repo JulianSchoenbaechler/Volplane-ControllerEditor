@@ -15,15 +15,24 @@ import 'volplane-drag-resize/lib/volplane-drag-resize.css';
 import VolplaneDragResize from 'volplane-drag-resize';
 
 export default {
-  name: 'editor-canvas-workspace-element',
+  name: 'EditorCanvasWorkspaceElement',
 
   components: { dragResize: VolplaneDragResize },
 
   props: {
     ...VolplaneDragResize.props,
-    name: String,
-    view: String,
-    zoomLevel: Number,
+    name: {
+      type: String,
+      default: 'noname',
+    },
+    view: {
+      type: String,
+      default: '',
+    },
+    zoomLevel: {
+      type: Number,
+      default: 1,
+    },
   },
 
   computed: {

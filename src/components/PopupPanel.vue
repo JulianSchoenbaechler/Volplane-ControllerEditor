@@ -1,41 +1,65 @@
 <template>
   <transition name="fade">
-    <popup v-if="isOpen" :title="title" @submit="submit">
-
+    <popup
+      v-if="isOpen"
+      :title="title"
+      @submit="submit"
+    >
       <!-- Popup text -->
-      <p v-html="popupText"></p>
+      <p v-html="popupText" />
 
       <!-- Input field -->
       <input
         v-if="displayInput"
-        type="text"
         v-model="inputValue"
-        @input="sanitize"
         v-autofocus
-      />
+        type="text"
+        @input="sanitize"
+      >
 
       <!-- Error and additional text -->
-      <p v-if="displayError" class="color-red" v-html="errorText"></p>
-      <p v-if="displayAdditional" v-html="additionalText"></p>
+      <p
+        v-if="displayError"
+        class="color-red"
+        v-html="errorText"
+      />
+      <p
+        v-if="displayAdditional"
+        v-html="additionalText"
+      />
 
       <!-- Also use cancel button? -->
       <template v-if="cancelButton">
         <div class="split right">
-          <input type="button" :value="cancelText" @click="close" />
+          <input
+            type="button"
+            :value="cancelText"
+            @click="close"
+          >
         </div>
         <div class="split left">
-
           <!-- Auto-focus only if not a prompt -->
           <template v-if="displayInput">
-            <input type="submit" :value="submitText" />
+            <input
+              type="submit"
+              :value="submitText"
+            >
           </template>
           <template v-else>
-            <input type="submit" :value="submitText" v-autofocus />
+            <input
+              v-autofocus
+              type="submit"
+              :value="submitText"
+            >
           </template>
         </div>
       </template>
       <template v-else>
-        <input type="submit" :value="submitText" v-autofocus />
+        <input
+          v-autofocus
+          type="submit"
+          :value="submitText"
+        >
       </template>
     </popup>
   </transition>
@@ -46,7 +70,7 @@ import { mapState } from 'vuex';
 import sanitizeName from '../utils/stringSanitizer';
 
 export default {
-  name: 'popup-panel',
+  name: 'PopupPanel',
 
   data() {
     return {
