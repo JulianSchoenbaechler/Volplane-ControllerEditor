@@ -195,11 +195,18 @@
   --color-dark2: #313133;
   --color-dark3: #1b1b1e;
   --color-dark4: #141416;
+  --color-dark5: #414044;
   --color-bright1: #f8f8ec;
   --color-selection: #cdaf7b;
   --color-selection-background: #525156;
   --color-accent: #7a2f34;
   --color-accent-highlight: #87383c;
+  --color-accent-invert: #1f1d2a;
+  --font-main: "Montserrat", sans-serif;
+  --font-size-normal: 14px;
+  --border-radius: 4px;
+  --transition-standard: all 0.2s ease-in-out;
+  --transition-fast: all 0.125s ease-in-out;
 }
 
 /*
@@ -217,10 +224,10 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-main);
   font-weight: 300;
   font-style: normal;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
@@ -335,8 +342,6 @@ textarea {
   margin: 0;
   padding: 0;
   font-size: 24px;
-  font-weight: 300;
-  font-style: normal;
   line-height: 0;
   overflow: visible;
   white-space: normal;
@@ -368,21 +373,21 @@ input {
   max-height: 20px;
   margin: 4px 10px;
   padding: 0 4px;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-main);
   font-weight: 200;
   font-style: normal;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
   line-height: normal !important;
   color: var(--color-bright1);
   background-color: var(--color-dark2);
   box-sizing: border-box;
   border: 1px solid var(--color-accent);
-  border-radius: 4px;
-  transition: all 0.2s ease-in-out;
+  border-radius: var(--border-radius);
+  transition: var(--transition-standard);
 }
 input:active, input:hover {
   background-color: #353438;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-standard);
 }
 input[type="color"] {
   padding: 4px;
@@ -422,19 +427,19 @@ textarea {
   display: block;
   margin: 4px 10px;
   padding: 4px;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-main);
   font-weight: 200;
   font-style: normal;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
   color: var(--color-bright1);
   background-color: var(--color-dark2);
   border: 1px solid var(--color-accent);
-  border-radius: 4px;
-  transition: all 0.2s ease-in-out;
+  border-radius: var(--border-radius);
+  transition: var(--transition-standard);
 }
 textarea:active, textarea:hover {
   background-color: #353438;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-standard);
 }
 select {
   display: block;
@@ -444,21 +449,21 @@ select {
   max-height: 20px;
   margin: 4px 10px;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-main);
   font-weight: 200;
   font-style: normal;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
   color: var(--color-bright1);
   cursor: pointer;
   background-color: var(--color-dark2);
   border: 1px solid var(--color-accent);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   appearance: none;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-standard);
 }
 select:active, select:hover {
     background-color: #353438;
-    transition: all 0.2s ease-in-out;
+    transition: var(--transition-standard);
 }
 textarea:invalid,
 input:invalid,
@@ -472,10 +477,6 @@ label {
   display: inline-block;
   margin: 10px 10px 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 200;
-  font-style: normal;
-  font-size: 14px;
   line-height: normal;
   color: var(--color-bright1);
   cursor: pointer;
@@ -506,9 +507,9 @@ label {
 #ce-title h1 {
   margin: 0;
   padding: 0.4em 0;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
   font-weight: 400;
-  line-height: 14px;
+  line-height: var(--font-size-normal);
   border-bottom: 2px solid var(--color-accent)
 }
 #ce-title samp {
@@ -518,11 +519,10 @@ label {
   right: 0;
   margin: 0 20px;
   padding: 0.4em 0;
-  font-family: "Montserrat", sans-serif;
   font-style: italic;
   font-size: 12px;
   font-weight: 200;
-  line-height: 14px;
+  line-height: var(--font-size-normal);
 }
 
 /* MAIN GRID LAYOUT */
@@ -599,8 +599,8 @@ main {
   font-size: 14px;
   font-weight: 200;
   text-align: left;
-  line-height: auto;
-  word-wrap: none;
+  line-height: normal;
+  word-wrap: normal;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

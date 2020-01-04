@@ -71,7 +71,7 @@
       <v-checkbox
         v-model="snapToGrid"
         :value="'Grid'"
-        :style="'display: inline-block;'"
+        style="display: inline;"
       />
       <span class="inline-label">&nbsp;X:</span>
       <input
@@ -363,11 +363,11 @@ export default {
 }
 #ce-canvas-workspace .ce-canvas-controls.left {
   left: calc(48px + 40%); /* This simulates 'sticky' and maybe must be changed in the future... */
-  border-right: 2px solid #414044;
+  border-right: 2px solid var(--color-dark5);
 }
 #ce-canvas-workspace .ce-canvas-controls.right {
   right: 0;
-  border-left: 2px solid #414044;
+  border-left: 2px solid var(--color-dark5);
 }
 #ce-canvas-workspace .ce-canvas-controls input[type="text"],
 #ce-canvas-workspace .ce-canvas-controls input[type="number"] {
@@ -385,7 +385,7 @@ export default {
   height: calc(100% - 12px);
   margin: 2px 0 0;
   padding: 0;
-  color: #f8f8ec;
+  color: var(--color-bright1);
   text-align: center;
   cursor: pointer;
 }
@@ -396,7 +396,7 @@ export default {
   height: calc(100% - 12px);
   margin: 2px 0 0;
   padding: 0;
-  color: #f8f8ec;
+  color: var(--color-bright1);
   text-align: center;
 }
 .virtual-console {
@@ -410,7 +410,7 @@ export default {
   padding: 0;
   text-align: center;
   /* TODO: Make dynamic */
-  background-color: #1f1d2a;
+  background-color: var(--color-accent-invert);
   /* background-image: url("../../assets/img/pirate.jpg"); */
   background-size: cover;
   background-position: center;
@@ -428,7 +428,7 @@ export default {
 .virtual-console > table.grid,
 .virtual-console > table.grid, tr,
 .virtual-console > table.grid, td {
-    border: 1px solid #7a2f34;
+    border: 1px solid var(--color-accent);
     border-collapse: collapse;
 }
 </style>

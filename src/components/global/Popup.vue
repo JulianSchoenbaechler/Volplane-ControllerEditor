@@ -58,8 +58,7 @@ export default {
 
 <style>
 .popup-container {
-  color: #f8f8ec;
-  background-color: #222125;
+  background-color: var(--color-dark1);
 }
 .popup-wrapper {
   display: flex;
@@ -87,8 +86,8 @@ export default {
   font-weight: 300;
   line-height: 32px;
   text-align: center;
-  color: #7a2f34;
-  border-bottom: 1px solid #7a2f34;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
 }
 .popup-wrapper form {
   flex: 0 1 auto;
@@ -115,16 +114,14 @@ export default {
   left: 0;
   margin: 0 10px 20px;
   text-align: justify;
-  font-size: 14px;
-  font-weight: 200;
-  font-style: normal;
+  font-size: var(--font-size-normal);
   line-height: normal;
 }
 .popup-wrapper p em,
 .popup-wrapper p i,
 .popup-wrapper p b,
 .popup-wrapper p u {
-  color: #cdaf7b;
+  color: var(--color-selection);
 }
 .popup-wrapper .split {
   display: inline-block;

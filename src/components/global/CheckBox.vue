@@ -55,24 +55,15 @@ export default {
 <style scoped>
 label {
   display: block;
-  width: auto;
-  height: 20px;
   max-width: none;
   max-height: 20px;
   margin: 0 10px;
-  padding: 0;
-  font-family: "Montserrat";
-  font-weight: 300;
-  font-style: normal;
-  font-size: 14px;
-  color: #f8f8ec;
-  cursor: pointer;
 }
 input[type="checkbox"] {
   display: none;
 }
 svg {
   margin-right: 4px;
-  color: #7a2f34;
+  color: var(--color-accent);
 }
 </style>

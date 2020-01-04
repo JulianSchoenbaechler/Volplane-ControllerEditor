@@ -55,11 +55,13 @@
         </div>
       </template>
       <template v-else>
-        <input
-          v-autofocus
-          type="submit"
-          :value="submitText"
-        >
+        <div class="center">
+          <input
+            v-autofocus
+            type="submit"
+            :value="submitText"
+          >
+        </div>
       </template>
     </popup>
   </transition>

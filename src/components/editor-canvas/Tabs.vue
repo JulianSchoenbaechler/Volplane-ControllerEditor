@@ -379,7 +379,7 @@ export default {
   height: 32px;
   margin: 0;
   padding: 0;
-  box-shadow: 0 0 4px 4px #222125;
+  box-shadow: 0 0 4px 4px var(--color-dark1);
   z-index: 1;
 }
 #ce-canvas-tabs ul {
@@ -394,7 +394,7 @@ export default {
   padding: 0;
   list-style: none;
   overflow: hidden;
-  background-color: #414044;
+  background-color: var(--color-dark5);
 }
 #ce-canvas-tabs li {
   display: inline-block;
@@ -406,21 +406,21 @@ export default {
   line-height: 32px;
   overflow: hidden;
   user-select: none;
-  border-right: 1px solid #414044;
-  background-color: #525156;
+  border-right: 1px solid var(--color-dark5);
+  background-color: var(--color-selection-background);
   cursor: pointer;
 }
 #ce-canvas-tabs li:last-child {
   border: none;
 }
 #ce-canvas-tabs li.default {
-  color: #cdaf7b;
+  color: var(--color-selection);
 }
 #ce-canvas-tabs li.active {
-  background-color: #222125;
+  background-color: var(--color-dark1);
 }
 #ce-canvas-tabs li.active.default {
-  color: #7a2f34;
+  color: var(--color-accent);
 }
 #ce-canvas-tabs li.small {
   padding: 0 4px;
@@ -441,7 +441,7 @@ export default {
   height: 12px;
   margin: 10px 0 10px 6px;
   padding: 0;
-  color: #f8f8ec;
+  color: var(--color-bright1);
   font-size: 12px;
   line-height: 12px;
   text-align: center;

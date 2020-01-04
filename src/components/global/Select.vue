@@ -138,6 +138,7 @@ export default {
       this.freshOpened = false;
       this.localValue = e.target.value;
       this.$emit('input', e.target.value);
+      console.log(this.name);
     },
 
     // Value change
@@ -203,13 +204,6 @@ export default {
   max-width: calc(100% - 20px);
   max-height: 20px;
   margin: 0 10px;
-  padding: 0;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 200;
-  font-style: normal;
-  font-size: 14px;
-  color: #f8f8ec;
-  cursor: pointer;
 }
 .select input {
   position: relative;
@@ -219,7 +213,7 @@ export default {
   cursor: pointer;
 }
 .select.open input {
-  border-radius: 4px 4px 0 0;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 .select ul {
   display: block;
@@ -235,17 +229,17 @@ export default {
   overflow: hidden auto;
   list-style: none;
   cursor: pointer;
-  background-color: #313133;
-  border-radius: 0 0 4px 4px;
+  background-color: var(--color-dark2);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
   border-top: none;
-  border-right: 1px solid #7a2f34;
-  border-left: 1px solid #7a2f34;
-  border-bottom: 1px solid #7a2f34;
+  border-right: 1px solid var(--color-accent);
+  border-left: 1px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
   box-sizing: border-box;
   transform: scaleY(0);
   transform-origin: top;
   z-index: 1;
-  transition: transform 0.2s ease-in-out;
+  transition: var(--transition-standard);
 }
 .select.open ul {
   transform: scaleY(1);
@@ -258,16 +252,16 @@ export default {
   max-height: 20px;
   margin: 0;
   padding: 0 10px;
-  transition: all 0.125s ease-in-out;
+  transition: var(--transition-fast);
 }
 .select li.category {
   padding: 0 4px;
-  color: #cdaf7b;
+  color: var(--color-selection);
   font-style: italic;
-  background-color: #222125;
+  background-color: var(--color-dark1);
 }
 .select li.item:hover {
-  background-color: #7a2f34;
+  background-color: var(--color-accent);
 }
 svg {
   position: absolute;
@@ -275,6 +269,6 @@ svg {
   right: 4px;
   width: auto;
   height: auto;
-  color: #7a2f34;
+  color: var(--color-accent);
 }
 </style>

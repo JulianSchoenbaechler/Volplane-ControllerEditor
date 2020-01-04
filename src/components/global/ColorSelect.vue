@@ -83,6 +83,7 @@ export default {
   max-height: 20px;
   margin: 4px 10px;
   padding: 0;
+  font-size: 0;
 }
 input[type="button"] {
   min-width: none !important;

@@ -1,6 +1,36 @@
 <template>
   <div>
     <h2>Create New Element</h2>
+    <v-select
+      name="demo"
+      value="Gaga"
+      :options="[
+        'Gaga',
+        'Dodo'
+      ]"
+    />
+    <form>
+      <v-radio
+        v-model="option"
+        name="hololulu"
+        value="o1"
+      />
+      <v-radio
+        v-model="option"
+        name="hololulu"
+        value="o2"
+      />
+      <v-radio
+        v-model="option"
+        name="hololulu"
+        value="o3"
+      />
+      <v-checkbox
+        v-model="check"
+        name="gaga"
+        value="Check This"
+      />
+    </form>
 
     <div class="property">
       <div>
@@ -99,6 +129,8 @@ export default {
 
   data() {
     return {
+      option: 'o2',
+      check: false,
     };
   },
 
