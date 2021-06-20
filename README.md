@@ -1,4 +1,6 @@
 # Volplane-ControllerEditor
+> **Note:** _The Volplane Project_ has been archived and will not undergo further development!
+
 A powerful and feature-rich controller editor for Volplane. https://volplane.julian-s.ch/
 
 ## Important Notice
